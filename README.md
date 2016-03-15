@@ -1,7 +1,5 @@
 # Benchmark for HTML Parsers
 
-[![Build Status](https://travis-ci.org/lexborisov/benchmark-html-persers.svg?branch=master)](https://travis-ci.org/lexborisov/benchmark-html-persers)
-
 Benchmark for HTML Parsers conformant with the [HTML5 specification]
 
 ## Build and Usage
