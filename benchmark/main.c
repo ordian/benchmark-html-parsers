@@ -1,12 +1,26 @@
-//
-//  main.c
-//  benchmark
-//
-//  Created by Alexander Borisov on 06.03.16.
-//  Copyright © 2016 Alexander Borisov. All rights reserved.
-//
+/*
+ Copyright 2016 Alexander Borisov
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+ Author: lex.borisov@gmail.com (Alexander Borisov)
+*/
 
 #include <stdio.h>
+#include <stdint.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "perf.h"
 #include "proc_stat.h"
@@ -118,29 +132,47 @@ void bentchmark(const char *dirpath, const char *filename, benchmark_work_callba
     fclose(fh);
 }
 
-int main(int argc, char *argv[])
+static void usage(void)
 {
-    const char *dirpath = "/new/html_parsers/list/";
+    fprintf(stderr, "benchmark <dirpath to HTML files>\n");
+}
+
+int main(int argc, char** argv)
+{
+    if (argc != 2) {
+        usage();
+        DIE("Invalid number of arguments\n");
+    }
     
-    bentchmark(dirpath, "/new/html_parsers/result/myhtml_single_object.csv", benchmark_myhtml_real_live);
-    bentchmark(dirpath, "/new/html_parsers/result/myhtml_single_single_object.csv", benchmark_myhtml_single_real_live);
+    struct stat st = {0};
     
-    bentchmark_fork(dirpath, "/new/html_parsers/result/myhtml_single.csv", benchmark_myhtml_single);
-    bentchmark_fork(dirpath, "/new/html_parsers/result/myhtml.csv", benchmark_myhtml);
-    bentchmark_fork(dirpath, "/new/html_parsers/result/html5ever.csv", benchmark_html5ever);
-    bentchmark_fork(dirpath, "/new/html_parsers/result/gumbo.csv", benchmark_gumbo);
+    if (stat("result", &st) == -1) {
+        if(mkdir("result", 0700)) {
+            DIE("Can't create directory: result\n");
+        }
+    }
+    
+    bentchmark(argv[1], "result/myhtml_single_object.csv", benchmark_myhtml_real_live);
+    bentchmark(argv[1], "result/myhtml_single_single_object.csv", benchmark_myhtml_single_real_live);
+    
+    bentchmark_fork(argv[1], "result/myhtml_single.csv", benchmark_myhtml_single);
+    bentchmark_fork(argv[1], "result/myhtml.csv", benchmark_myhtml);
+    bentchmark_fork(argv[1], "result/html5ever.csv", benchmark_html5ever);
+    bentchmark_fork(argv[1], "result/gumbo.csv", benchmark_gumbo);
     
     return 0;
 }
 
 //int main(int argc, const char * argv[]) {
 //    // insert code here...
+//    struct timespec tw = {1,0};
 //    
 //    uint64_t start = myhtml_hperf_clock();
-//    usleep(1000000);
-//    uint64_t stop = myhtml_hperf_clock();
+//    nanosleep (&tw, NULL);
+//    uint64_t end = myhtml_hperf_clock();
 //    
-//    myhtml_hperf_print("Test", start, stop, stdout);
-//
+//    double work_time = myhtml_absolute_difference(start, end);
+//    printf("Time: %0.5f\n", work_time);
+//    
 //    return 0;
 //}

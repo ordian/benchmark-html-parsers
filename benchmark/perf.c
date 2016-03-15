@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Alexander Borisov
+ Copyright 2015-2016 Alexander Borisov
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,25 +13,15 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  
- Authors: insoreiges@gmail.com (Evgeny Yakovlev), lex.borisov@gmail.com (Alexander Borisov)
+ Authors: lex.borisov@gmail.com (Alexander Borisov), insoreiges@gmail.com (Evgeny Yakovlev)
 */
 
 /**
  * Platform-specific hdef performance clock value. 
  */ 
 
-#include <stdio.h>
-#include <time.h>
 
-#if !defined(IS_OS_WINDOWS)
-#include <unistd.h>
-#endif
-
-#if defined(__APPLE__)
-#include <sys/types.h>
-#include <sys/sysctl.h>
-#elif defined(IS_OS_WINDOWS)
-#endif
+#include "perf.h"
 
 #if defined(MyHTML_FORCE_RDTSC) /* Force using rdtsc, useful for comparison */
 
@@ -133,11 +123,15 @@ uint64_t myhtml_hperf_res(void)
 uint64_t myhtml_hperf_clock(void)
 {
     struct timespec tspec;
-    int error = clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tspec);
+    int error = clock_gettime(CLOCK_MONOTONIC, &tspec);
     if (error)
         return 0;
 
     return TIMESPEC_TO_USEC(tspec);
+}
+
+double myhtml_absolute_difference(uint64_t start, uint64_t end) {
+    return (double)(end - start) / (double)myhtml_hperf_res();
 }
 
 #elif defined(__APPLE__) && defined(__MACH__)

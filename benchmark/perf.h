@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Alexander Borisov
+ Copyright 2015-2016 Alexander Borisov
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,6 +18,26 @@
 
 #ifndef perf_h
 #define perf_h
+
+#include <stdio.h>
+#include <time.h>
+#include <stdint.h>
+
+#if defined(_WIN32) || defined(_WIN64)
+#define IS_OS_WINDOWS
+#include <windows.h>
+#endif
+
+#if !defined(IS_OS_WINDOWS)
+#include <unistd.h>
+#endif
+
+#if defined(__APPLE__)
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#elif defined(IS_OS_WINDOWS)
+#endif
+
 
 /**
  * Platform-specific hdef performance clock queries.

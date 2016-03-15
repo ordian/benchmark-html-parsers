@@ -1,10 +1,20 @@
-//
-//  work.c
-//  benchmark
-//
-//  Created by Alexander Borisov on 06.03.16.
-//  Copyright © 2016 Alexander Borisov. All rights reserved.
-//
+/*
+ Copyright 2016 Alexander Borisov
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+ Author: lex.borisov@gmail.com (Alexander Borisov)
+*/
 
 #include "work.h"
 
@@ -71,7 +81,7 @@ void benchmark_work_fork(const char *filepath, const char *filename, benchmark_w
     struct benchmark_res_html res = benchmark_load_html_file(filepath);
     struct benchmark_ctx ctx = {0, 0, NULL, 0};
     
-    size_t mem_start    = proc_stat_getPeakRSS();
+    size_t mem_start    = proc_stat_getCurrentRSS();
     uint64_t time_start = myhtml_hperf_clock();
     
     callback(filename, res.html, res.size, &ctx);
@@ -95,6 +105,7 @@ void benchmark_work_readdir_fork(const char *dirpath, benchmark_work_callback_f 
     
     size_t dirpath_len = strlen(dirpath);
     
+    // boooom, after 4k :)
     char path[4096];
     strncpy(path, dirpath, dirpath_len);
     
@@ -102,7 +113,7 @@ void benchmark_work_readdir_fork(const char *dirpath, benchmark_work_callback_f 
     {
         while((ent = readdir(dir)) != NULL)
         {
-            sprintf(&path[dirpath_len], "%s", ent->d_name);
+            sprintf(&path[dirpath_len], "/%s", ent->d_name);
             
             stat(path, &path_stat);
             
@@ -148,7 +159,7 @@ void benchmark_work_readdir(const char *dirpath, struct benchmark_ctx *ctx, benc
     {
         while((ent = readdir(dir)) != NULL)
         {
-            sprintf(&path[dirpath_len], "%s", ent->d_name);
+            sprintf(&path[dirpath_len], "/%s", ent->d_name);
             
             stat(path, &path_stat);
             
