@@ -7,7 +7,11 @@ OPTIMIZATION_LEVEL ?= -O2
 
 CFLAGS ?= -Wall -Werror
 CFLAGS += $(OPTIMIZATION_LEVEL) -fPIC --std=c99 -pthread -I.
-CFLAGS += -D_POSIX_C_SOURCE=199309L
+
+UNAM := $(shell uname -s)
+ifeq ($(UNAM),Linux)
+	CFLAGS += -D_POSIX_C_SOURCE=199309L
+endif
 
 LDFLAGS ?= 
 LDFLAGS += -lmyhtml -pthread -lhtml2html_lib -lm -ldl -lgumbo
