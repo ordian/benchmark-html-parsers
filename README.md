@@ -8,7 +8,7 @@ Benchmark for HTML Parsers conformant with the [HTML5 specification]
 
 ### For Mac OS X && Linux
 
-Before build this program make and install three libraries: [myhtml], [gumbo], [html2html_lib] (C binding for Rust html5ever (Servo))
+Before build this program make and install three libraries: [myhtml], [gumbo], [html2html_lib] *C binding for Rust html5ever (Servo))*
 
 **build**
 ```shell
