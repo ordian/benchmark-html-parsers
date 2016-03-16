@@ -73,7 +73,9 @@ void benchmark_work(const char *filepath, const char *filename, benchmark_work_c
     ctx->sum += work_time;
     ctx->total_file_size += res.size;
     
-    fprintf(out_fh, "\"%s\";%zu;%0.5f;%lld\n", filename, res.size, work_time, 0LL);
+    if(out_fh) {
+        fprintf(out_fh, "\"%s\";%zu;%0.5f;%lld\n", filename, res.size, work_time, 0LL);
+    }
 }
 
 void benchmark_work_fork(const char *filepath, const char *filename, benchmark_work_callback_f callback, FILE *out_fh)
@@ -144,7 +146,8 @@ void benchmark_work_readdir_fork(const char *dirpath, benchmark_work_callback_f 
 
 void benchmark_work_readdir(const char *dirpath, struct benchmark_ctx *ctx, benchmark_work_callback_f callback, FILE *out_fh)
 {
-    setbuf(out_fh, NULL);
+    if(out_fh)
+        setbuf(out_fh, NULL);
     
     DIR *dir;
     struct dirent *ent;

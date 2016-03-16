@@ -118,18 +118,35 @@ void bentchmark_fork(const char *dirpath, const char *filename, benchmark_work_c
     fclose(fh);
 }
 
-void bentchmark(const char *dirpath, const char *filename, benchmark_work_callback_f callback)
+double bentchmark(const char *dirpath, const char *filename, benchmark_work_callback_f callback)
 {
-    FILE *fh = fopen(filename, "w");
-    if (fh == NULL) {
-        printf("Error opening file: %s\n", filename);
-        exit(EXIT_FAILURE);
+    FILE *fh = NULL;
+    
+    if(filename) {
+        fh = fopen(filename, "w");
+        if (fh == NULL) {
+            printf("Error opening file: %s\n", filename);
+            exit(EXIT_FAILURE);
+        }
     }
     
     struct benchmark_ctx ctx = {0, 0, NULL, 0};
     benchmark_work_readdir(dirpath, &ctx, callback, fh);
     
     fclose(fh);
+    
+    return ctx.sum;
+}
+
+void bentchmark_real(const char *dirpath, benchmark_work_callback_f callback)
+{
+    size_t mem_start = proc_stat_getCurrentRSS();
+    double time = bentchmark(dirpath, NULL, callback);
+    size_t mem_end = proc_stat_getPeakRSS();
+    
+    size_t mem_used = mem_end - mem_start;
+    
+    printf("Time: %0.5f; Mem start: %zu; Mem end: %zu; Mem after work: %zu\n", time, mem_start, mem_end, mem_used);
 }
 
 static void usage(void)
@@ -162,6 +179,39 @@ int main(int argc, char** argv)
     
     return 0;
 }
+
+//int main(int argc, char** argv)
+//{
+//    if (argc != 2) {
+//        usage();
+//        DIE("Invalid number of arguments\n");
+//    }
+//    
+//    bentchmark_real(argv[1], benchmark_myhtml_real_live);
+//    return 0;
+//}
+
+//int main(int argc, const char * argv[])
+//{
+//    if (argc != 2) {
+//        usage();
+//        DIE("Invalid number of arguments\n");
+//    }
+//    
+//    bentchmark_real(argv[1], benchmark_html5ever);
+//    return 0;
+//}
+
+//int main(int argc, const char * argv[])
+//{
+//    if (argc != 2) {
+//        usage();
+//        DIE("Invalid number of arguments\n");
+//    }
+//    
+//    bentchmark_real(argv[1], benchmark_gumbo);
+//    return 0;
+//}
 
 //int main(int argc, const char * argv[]) {
 //    // insert code here...
