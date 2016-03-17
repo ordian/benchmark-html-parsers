@@ -2,26 +2,27 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Benchmark-html-persers by lexborisov</title>
+    <title>Benchmark. Analyzing and Testing Current HTML Parsers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="js/jquery-2.2.1.min.js"></script>
+    <script src="js/work.js"></script>
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Benchmark-html-persers</h1>
-      <h2 class="project-tagline">Benchmark for HTML Parsers conformant with the HTML5 specification</h2>
-      <a href="https://github.com/lexborisov/benchmark-html-persers" class="btn">View on GitHub</a>
-      <a href="https://github.com/lexborisov/benchmark-html-persers/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/lexborisov/benchmark-html-persers/tarball/master" class="btn">Download .tar.gz</a>
+      <h1 class="project-name"></h1>
+      <h2 class="project-tagline">Benchmark. Analyzing and Testing Current HTML Parsers</h2>
     </section>
 
     <section class="main-content">
+        
+        <img src="img/logo.png">
       <p>Hi there!</p>
 
-<p>After posting <a href="https://www.reddit.com/r/programming/comments/49yqal/fast_html_parser_on_pure_c_with_posix_threads/">the previous article</a>, I've got lots of emails asking to show and prove how one solution is better than another.
+<p>After posting <a href="https://www.reddit.com/r/programming/comments/49yqal/fast_html_parser_on_pure_c_with_posix_threads/">the previous article</a>, I've got lots of emails asking to show and prove how one solution is better than another.<br>
 I enthusiastically got down to comparisons, but it's all usually a little bit trickier than at first sight.</p>
 
 <p>Yes, in this article I suggest taking out and measuring all the parsers!</p>
@@ -31,12 +32,14 @@ I enthusiastically got down to comparisons, but it's all usually a little bit tr
 
 <p>Before comparing anything, we've got to figure out: what are we really going to compare?! HTML parsers, but what is it?</p>
 
-<p>An HTML parser is:
-1. Tokenizer — breaking text down into tokens
-1. Tree Builder — placing tokens in “correct positions” in a tree
-1. Tree follow-up</p>
+<p>An HTML parser is:</p>
+<ol>
+ <li>Tokenizer — breaking text down into tokens</li>
+ <li>Tree Builder — placing tokens in “correct positions” in a tree</li>
+ <li>Tree follow-up</li>
+</ol>
 
-<p>Someone out of the blue might say: “There's no need to build a tree for HTML parsing, it's enough to get tokens.” Unfortunately, they're wrong.
+<p>Someone out of the blue might say: “There's no need to build a tree for HTML parsing, it's enough to get tokens.” Unfortunately, they're wrong.<br>
 Actually, for correct HTML tokenization, we should have a tree at hand. Points 1 and 2 go as one.</p>
 
 <p>Here're 2 examples:</p>
@@ -72,32 +75,34 @@ Actually, for correct HTML tokenization, we should have a tree at hand. Points 1
 
 <p>After “:” comes namespace, if unspecified then html.</p>
 
-<p>As the examples show, the STYLE element behaves differently — depending on its position. The 1st variant has the element A, while in the 2nd it's already a text element.Here I can give examples with “frameset”, “script”, “title”... and their different behavior, but I guess you have the general idea.</p>
+<p>As the examples show, the STYLE element behaves differently — depending on its position. The 1st variant has the element A, while in the 2nd it's already a text element. Here I can give examples with “frameset”, “script”, “title”... and their different behavior, but I guess you have the general idea.</p>
 
-<p>Now we can draw a conclusion that breakdown into tokens can't be correctly done without building an HTML tree. Consequently, HTML parsing can't be done without at least 2 stages: tokenization and tree building.
+<p>Now we can draw a conclusion that breakdown into tokens can't be correctly done without building an HTML tree. Consequently, HTML parsing can't be done without at least 2 stages: tokenization and tree building.<br>
 As to the terms: “strict”, “failing the spec”, “light”, “HTML 4”, and the like... I'm sure one can safely replace all these terms with 1: “doesn't process correctly.” It's all absurd. </p>
 
 <h3>
 <a id="how-and-what-to-compare" class="anchor" href="#how-and-what-to-compare" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How and What to Compare?</h3>
 
-<p>Here comes the point. An HTML parser is too proud a name for everything. Moreover, even those dubbed HTML tokenizers aren't actually such.
+<p>Here comes the point. An HTML parser is too proud a name for everything. Moreover, even those dubbed HTML tokenizers aren't actually such.<br>
 With all the parsers at hand, I wonder what and with what to compare? So let's compare true parsers:</p>
 
 <p>MyHTML, HTML5Lib, HTML5Ever, Gumbo.</p>
 
-<p>It's them that comply with the latest spec, and their result will match what we can see in present-day browsers.
-Untrue parsers (failing the spec) may greatly vary in speed / memory, but it's a fat lot of use since they process a document incorrectly.
+<p>It's them that comply with the latest spec, and their result will match what we can see in present-day browsers.<br>
+Untrue parsers (failing the spec) may greatly vary in speed / memory, but it's a fat lot of use since they process a document incorrectly.<br>
 No runarounds like “a parser for HTML 4” will count. Things always change, and we've got to keep pace with them.</p>
 
-<p>I should say HTML5Ever isn't an absolutely true parser. Authors write it doesn't pass all html5lin-test-tree-builder tests for correct tree building. It became true for its efforts.
+<p>I should say HTML5Ever isn't an absolutely true parser. Authors write it doesn't pass all html5lin-test-tree-builder tests for correct tree building. It became true for its efforts.<br>
 At the moment of writing this article, HTML5Lib wasn't building the tree for some HTML formats correctly. But it's all bugs the authors will hopefully fix.</p>
 
-<p>Let's measure time / memory for 466 HTML files by Alexa TOP500. 466, not 500, because not all websites are running or open their content.</p>
+<p>Let's measure time/memory for 466 HTML files by Alexa TOP500. 466, not 500, because not all websites are running or open their content.</p>
 
-<p>For each page, a fork will be made with the stages:
-1. Complete parser initialization
-1. 1 page parsing
-1. Resource deallocation</p>
+<p>For each page, a fork will be made with the stages:</p>
+<ol>
+ <li>Complete parser initialization</li>
+ <li>1 page parsing</li>
+ <li>Resource deallocation</li>
+</ol>
 
 <p>There'll also be an ex vivo test — running all the pages with 1 object, where possible. Everything will occur sequentially.</p>
 
@@ -111,33 +116,47 @@ At the moment of writing this article, HTML5Lib wasn't building the tree for som
 <p>MyHTML and Gumbo are written on C. HTML5Ever — it’s Rust. I'm not good in Rust, not yet, so I asked Alexey Voznyuk to help me. Alexey agreed (kudos to him!) and made a C wrapper for parser testing.</p>
 
 <p>Runtime test results:
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_0_500_990.png" alt="time benchmark html parsers"></p>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_0_500.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_0_500_990.png" alt="time benchmark html parsers"></a></p>
 
 <p>Resource consumption test results:
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_0_500_990.png" alt="memory benchmark html parsers"></p>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_0_500.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_0_500_990.png" alt="memory benchmark html parsers"></a></p>
 
-<p>Runtime test results divided by 100
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_0_100_990.png" alt="">
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_100_200_990.png" alt="">
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_200_300_990.png" alt="">
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_300_400_990.png" alt="">
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_400_500_990.png" alt=""></p>
+<p><span class="spoiler_title" id="title-time-100">Runtime test results divided by 100</span></p>
+<div class="spoiler_text" id="data-time-100">
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_0_100.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_0_100_990.png" alt=""></a>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_100_200.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_100_200_990.png" alt=""></a>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_200_300.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_200_300_990.png" alt=""></a>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_300_400.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_300_400_990.png" alt=""></a>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_400_500.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/time/benchmark_400_500_990.png" alt=""></a>
+</div>
 
-<p>Resource consumption results divided by 100
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_0_100_990.png" alt="">
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_100_200_990.png" alt="">
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_200_300_990.png" alt="">
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_300_400_990.png" alt="">
-<img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_400_500_990.png" alt=""></p>
+<p><span class="spoiler_title" id="title-mem-100">Resource consumption results divided by 100</span></p>
+<div class="spoiler_text" id="data-mem-100">
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_0_100.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_0_100_990.png" alt=""></a>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_100_200.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_100_200_990.png" alt=""></a>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_200_300.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_200_300_990.png" alt=""></a>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_300_400.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_300_400_990.png" alt=""></a>
+<a href="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_400_500.png"><img src="https://raw.githubusercontent.com/lexborisov/benchmark-html-persers/master/Results/mem/benchmark_400_500_990.png" alt=""></a>
+</div>
 
 <p>Ex vivo test result. Running all (466) pages in 1 process:</p>
 
-<p><em>MyHTML</em>:
-    Overall time: 0.50890; Memory at the beginning: 1052672; Memory at the end: 32120832
+<div class="highlight highlight-text-html-basic"><pre>
+<em>MyHTML</em>:
+    <b style="padding-left: 40px;">Overall time:</b> 0.50890;
+    <b style="padding-left: 40px;">Memory at the beginning:</b> 1052672;
+    <b style="padding-left: 40px;">Memory at the end:</b> 32120832
+
 <em>Gumbo</em>:
-    Overall time: 6.12951; Memory at the beginning: 1052672; Memory at the end: 29319168
+    <b style="padding-left: 40px;">Overall time:</b> 6.12951;
+    <b style="padding-left: 40px;">Memory at the beginning:</b> 1052672;
+    <b style="padding-left: 40px;">Memory at the end:</b> 29319168
+
 <em>HTML5Ever</em>:
-    Overall time: 4.50536; Memory at the beginning: 1052672; Memory at the end: 30715904</p>
+    <b style="padding-left: 40px;">Overall time:</b> 4.50536;
+    <b style="padding-left: 40px;">Memory at the beginning:</b> 1052672;
+    <b style="padding-left: 40px;">Memory at the end:</b> 30715904
+</pre></div>
 
 <h3>
 <a id="totals" class="anchor" href="#totals" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Totals</h3>
@@ -167,9 +186,12 @@ At the moment of writing this article, HTML5Lib wasn't building the tree for som
 
 <h3>
 <a id="links" class="anchor" href="#links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Links</h3>
-
-<p><a href="https://github.com/lexborisov/benchmark-html-persers/tree/master/Results">Benchmark code</a>
-<a href="https://github.com/lexborisov/myhtml">MyHTML</a>, <a href="https://github.com/google/gumbo-parser">Gumbo</a>, <a href="https://github.com/swizard0/html2html_lib">HTML5Ever</a> by Alexey</p>
+<p>
+<a href="https://github.com/lexborisov/benchmark-html-persers/tree/master/Results">Benchmark code</a><br>
+<a href="https://github.com/lexborisov/benchmark-html-persers/tree/master/Results">Images and CSV</a><br>
+<a href="https://github.com/lexborisov/myhtml">MyHTML</a>, <a href="https://github.com/google/gumbo-parser">Gumbo</a>, <a href="https://github.com/servo/html5ever">HTML5Ever</a><br>
+<a href="https://github.com/swizard0/html2html_lib">API for HTML5Event</a> by Alexey<br>
+</p>
 
 <p><em><strong>Thanks for reading!</strong></em></p>
 
