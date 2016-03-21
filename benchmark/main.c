@@ -191,6 +191,17 @@ int main(int argc, char** argv)
 //    return 0;
 //}
 
+//int main(int argc, char** argv)
+//{
+//    if (argc != 2) {
+//        usage();
+//        DIE("Invalid number of arguments\n");
+//    }
+//    
+//    bentchmark_real(argv[1], benchmark_myhtml_single_real_live);
+//    return 0;
+//}
+
 //int main(int argc, const char * argv[])
 //{
 //    if (argc != 2) {
