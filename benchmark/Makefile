@@ -15,6 +15,7 @@ endif
 
 LDFLAGS ?= 
 LDFLAGS += -lmyhtml -pthread -lhtml2html_lib -lm -ldl -lgumbo
+#LDFLAGS += -lhubbub -lparserutils -ldom -lwapcaplet -L/opt/local/lib -liconv 
 
 SRCS := $(wildcard *.c)
 HDRS := $(wildcard *.h)

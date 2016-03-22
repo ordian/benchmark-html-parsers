@@ -30,6 +30,13 @@
 #include "gumbo.h"
 #include "html2html_lib.h"
 
+// link lib -lhubbub -lparserutils -liconv -ldom -lwapcaplet
+//#include "hubbub/parser.h"
+//#include "hubbub/tree.h"
+//
+//#include "dom/dom.h"
+//#include "dom/bindings/hubbub/parser.h"
+
 void benchmark_myhtml_single(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
 {
     myhtml_t* myhtml = myhtml_create();
@@ -105,6 +112,25 @@ void benchmark_html5ever(const char *filename, const char *html, size_t size, st
     parse_document(html, size, 0);
 }
 
+//void benchmark_hubbub_real_live(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
+//{
+//    if(ctx->data == NULL)
+//    {
+//        dom_hubbub_parser_params params;
+//        memset(&params, 0, sizeof(dom_hubbub_parser_params));
+//        
+//        dom_document *doc;
+//        dom_hubbub_parser *parser = NULL;
+//        dom_hubbub_parser_create(&params, &parser, &doc);
+//        
+//        ctx->data = parser;
+//        ctx->ctx  = doc;
+//    }
+//    
+//    dom_hubbub_error status = dom_hubbub_parser_parse_chunk(ctx->data, (const unsigned char*)html, size);
+//    status = dom_hubbub_parser_completed(ctx->data);
+//}
+
 void bentchmark_fork(const char *dirpath, const char *filename, benchmark_work_callback_f callback)
 {
     FILE *fh = fopen(filename, "w");
@@ -179,6 +205,17 @@ int main(int argc, char** argv)
     
     return 0;
 }
+
+//int main(int argc, char** argv)
+//{
+//    if (argc != 2) {
+//        usage();
+//        DIE("Invalid number of arguments\n");
+//    }
+//    
+//    bentchmark_real(argv[1], benchmark_hubbub_real_live);
+//    return 0;
+//}
 
 //int main(int argc, char** argv)
 //{

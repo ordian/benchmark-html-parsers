@@ -38,6 +38,7 @@ struct benchmark_ctx {
     size_t count;
     double sum;
     void  *data;
+    void  *ctx;
     
     size_t start_mem;
     size_t total_file_size;
