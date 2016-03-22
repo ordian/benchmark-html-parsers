@@ -112,7 +112,7 @@ void benchmark_html5ever(const char *filename, const char *html, size_t size, st
     parse_document(html, size, 0);
 }
 
-//void benchmark_hubbub_real_live(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
+//void benchmark_hubbub_real_live_dom(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
 //{
 //    if(ctx->data == NULL)
 //    {
@@ -129,6 +129,20 @@ void benchmark_html5ever(const char *filename, const char *html, size_t size, st
 //    
 //    dom_hubbub_error status = dom_hubbub_parser_parse_chunk(ctx->data, (const unsigned char*)html, size);
 //    status = dom_hubbub_parser_completed(ctx->data);
+//}
+//
+//void benchmark_hubbub_real_live(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
+//{
+//    if(ctx->data == NULL)
+//    {
+//        hubbub_parser *parser = NULL;
+//        hubbub_parser_create("UTF-8", true, &parser);
+//        
+//        ctx->data = parser;
+//    }
+//    
+//    hubbub_error status = hubbub_parser_parse_chunk(ctx->data, (const uint8_t*)html, size);
+//    status = hubbub_parser_completed(ctx->data);
 //}
 
 void bentchmark_fork(const char *dirpath, const char *filename, benchmark_work_callback_f callback)
