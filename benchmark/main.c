@@ -173,7 +173,8 @@ double bentchmark(const char *dirpath, const char *filename, benchmark_work_call
     struct benchmark_ctx ctx = {0, 0, NULL, 0};
     benchmark_work_readdir(dirpath, &ctx, callback, fh);
     
-    fclose(fh);
+    if(fh)
+        fclose(fh);
     
     return ctx.sum;
 }
