@@ -5,7 +5,7 @@ SUBDIRS := benchmark
 PROGNAME := benchmark
 
 all:
-	for f in $(SUBDIRS); do $(MAKE) -C $$f all; done
+	for f in $(SUBDIRS); do $(MAKE) -C $$f $@; done
 	cp $(SRCDIR)/$(PROGNAME) ./bm
 
 clean:

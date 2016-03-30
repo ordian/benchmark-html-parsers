@@ -27,8 +27,11 @@
 #include "work.h"
 
 #include "myhtml/api.h"
+
+#ifndef BENCHMARK_BUILD_WITH_ONLY_MyHTML
 #include "gumbo.h"
 #include "html2html_lib.h"
+#endif
 
 // link lib -lhubbub -lparserutils -liconv -ldom -lwapcaplet
 //#include "hubbub/parser.h"
@@ -101,6 +104,7 @@ void benchmark_myhtml_real_live(const char *filename, const char *html, size_t s
     myhtml_parse(ctx->data, MyHTML_ENCODING_UTF_8, html, size);
 }
 
+#ifndef BENCHMARK_BUILD_WITH_ONLY_MyHTML
 void benchmark_gumbo(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
 {
     GumboOutput* output = gumbo_parse_with_options(&kGumboDefaultOptions, html, size);
@@ -111,6 +115,7 @@ void benchmark_html5ever(const char *filename, const char *html, size_t size, st
 {
     parse_document(html, size, 0);
 }
+#endif
 
 //void benchmark_hubbub_real_live_dom(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
 //{
@@ -215,8 +220,11 @@ int main(int argc, char** argv)
     
     bentchmark_fork(argv[1], "result/myhtml_single.csv", benchmark_myhtml_single);
     bentchmark_fork(argv[1], "result/myhtml.csv", benchmark_myhtml);
+    
+#ifndef BENCHMARK_BUILD_WITH_ONLY_MyHTML
     bentchmark_fork(argv[1], "result/html5ever.csv", benchmark_html5ever);
     bentchmark_fork(argv[1], "result/gumbo.csv", benchmark_gumbo);
+#endif
     
     return 0;
 }
