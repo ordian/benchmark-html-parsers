@@ -14,6 +14,7 @@ CFLAGS += $(OPTIMIZATION_LEVEL) -fPIC --std=c99 -pthread -I.
 UNAM := $(shell uname -s)
 ifeq ($(UNAM),Linux)
 	CFLAGS += -D_POSIX_C_SOURCE=199309L
+    LDFLAGS += -lrt
 endif
 
 BENCHMARK_BUILD_WITH_ONLY_MyHTML ?= NO
