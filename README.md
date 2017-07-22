@@ -6,7 +6,9 @@ Benchmark for HTML Parsers conformant with the [HTML5 specification]
 
 ### For Mac OS X && Linux
 
-Before build this program make and install these libraries: [myhtml], [gumbo].
+**prerequisite** 
+
+Install these libraries: [myhtml], [gumbo].
 
 **build**
 ```shell
@@ -20,10 +22,10 @@ make
 bm /path/to/dir/with/html/files
 ```
 
-After starting the program we have "result" directory with the result appears
+As an artefact of this invocation we will have a "result" directory with csv files (format: site, file size, time, memory).
 
 
-## Issues and Recommendations
+## Troubleshooting
 
 Q: I get an error:
 
