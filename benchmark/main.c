@@ -49,7 +49,7 @@ void benchmark_myhtml_single(const char *filename, const char *html, size_t size
     myhtml_tree_t* tree = myhtml_tree_create();
     myhtml_tree_init(tree, myhtml);
     
-    myhtml_parse(tree, MyHTML_ENCODING_UTF_8, html, size);
+    myhtml_parse(tree, MyENCODING_UTF_8, html, size);
     
     myhtml_tree_destroy(tree);
     myhtml_destroy(myhtml);
@@ -64,7 +64,7 @@ void benchmark_myhtml(const char *filename, const char *html, size_t size, struc
     myhtml_tree_t* tree = myhtml_tree_create();
     myhtml_tree_init(tree, myhtml);
     
-    myhtml_parse(tree, MyHTML_ENCODING_UTF_8, html, size);
+    myhtml_parse(tree, MyENCODING_UTF_8, html, size);
     
     myhtml_tree_destroy(tree);
     myhtml_destroy(myhtml);
@@ -84,7 +84,7 @@ void benchmark_myhtml_single_real_live(const char *filename, const char *html, s
         ctx->data = tree;
     }
     
-    myhtml_parse(ctx->data, MyHTML_ENCODING_UTF_8, html, size);
+    myhtml_parse(ctx->data, MyENCODING_UTF_8, html, size);
 }
 
 void benchmark_myhtml_real_live(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
@@ -101,7 +101,7 @@ void benchmark_myhtml_real_live(const char *filename, const char *html, size_t s
         ctx->data = tree;
     }
     
-    myhtml_parse(ctx->data, MyHTML_ENCODING_UTF_8, html, size);
+    myhtml_parse(ctx->data, MyENCODING_UTF_8, html, size);
 }
 
 #ifndef BENCHMARK_BUILD_WITH_ONLY_MyHTML

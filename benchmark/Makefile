@@ -5,11 +5,11 @@ CC ?= gcc
 
 OPTIMIZATION_LEVEL ?= -O2
 
-LDFLAGS ?=  
+LDFLAGS ?=
 LDFLAGS += -lmyhtml -pthread
 
 CFLAGS ?= -Wall -Werror
-CFLAGS += $(OPTIMIZATION_LEVEL) -fPIC --std=c99 -pthread -I.
+CFLAGS += $(OPTIMIZATION_LEVEL) -fPIC --std=c99 -pthread -I. -I ../html2html_lib/include
 
 UNAM := $(shell uname -s)
 ifeq ($(UNAM),Linux)
@@ -19,12 +19,12 @@ endif
 
 BENCHMARK_BUILD_WITH_ONLY_MyHTML ?= NO
 ifeq ($(BENCHMARK_BUILD_WITH_ONLY_MyHTML),NO)
-    LDFLAGS += -lhtml2html_lib -lm -ldl -lgumbo
+    LDFLAGS +=  -lgumbo -L ../html2html_lib/target/release -lhtml2html_lib -lpthread -l dl
 else
     CFLAGS += -DBENCHMARK_BUILD_WITH_ONLY_MyHTML
 endif
 
-#LDFLAGS += -lhubbub -lparserutils -ldom -lwapcaplet -L/opt/local/lib -liconv 
+#LDFLAGS += -lhubbub -lparserutils -ldom -lwapcaplet -L/opt/local/lib -liconv
 
 SRCS := $(wildcard *.c)
 HDRS := $(wildcard *.h)
