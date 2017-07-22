@@ -6,10 +6,12 @@ Benchmark for HTML Parsers conformant with the [HTML5 specification]
 
 ### For Mac OS X && Linux
 
-Before build this program make and install three libraries: [myhtml], [gumbo], [html2html_lib] *C binding for Rust html5ever (Servo))*
+Before build this program make and install these libraries: [myhtml], [gumbo].
 
 **build**
 ```shell
+# build html2html_lib
+(cd html2html_lib && cargo build --release)
 make
 ```
 
@@ -23,8 +25,20 @@ After starting the program we have "result" directory with the result appears
 
 ## Issues and Recommendations
 
-Leave here or send e-mail: Alexander Borisov <lex.borisov@gmail.com>
+Q: I get an error:
 
+```shell
+./bm: error while loading shared libraries: libmyhtml.so: cannot open shared object file: No such file or directory
+```
+
+A: Find the libmyhtml.so and set the environment variable `LD_LIBRARY_PATH`:
+
+```shell
+$ sudo updatedb
+$ locate libmyhtml.so
+/usr/local/lib/libmyhtml.so
+$ export LD_LIBRARY_PATH=/usr/local/lib # <-- your path to libmyhtml.so
+```
 
 ## AUTHOR
 
