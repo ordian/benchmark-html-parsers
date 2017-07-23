@@ -6,7 +6,7 @@ CC ?= gcc
 OPTIMIZATION_LEVEL ?= -O2
 
 LDFLAGS ?=
-LDFLAGS += -lmyhtml -pthread
+LDFLAGS += -lmyhtml -pthread -lm
 
 CFLAGS ?= -Wall -Werror
 CFLAGS += $(OPTIMIZATION_LEVEL) -fPIC --std=c99 -pthread -I. -I ../html5ever_parse_capi/include

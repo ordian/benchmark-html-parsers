@@ -17,6 +17,10 @@
 */
 
 #include "work.h"
+#include <math.h>
+#include <stdlib.h>
+
+#define NUM_ITERATIONS 101
 
 struct benchmark_res_html {
     char  *html;
@@ -55,10 +59,37 @@ struct benchmark_res_html benchmark_load_html_file(const char* filename)
     return res;
 }
 
+int double_cmp(const void* a, const void* b)
+{
+    int double_a = * ( (double*) a );
+    int double_b = * ( (double*) b );
+    if ( double_a < double_b ) return -1;
+    else if ( double_a > double_b ) return 1;
+    else return 0;
+}
+
+double mean(const double* a, size_t size) {
+    double sum = 0;
+    for (size_t i = 0; i < size; ++i)
+        sum += a[i];
+    return sum / size;
+}
+
+double stddev(const double* a, size_t size) {
+    double m = mean(a, size);
+    double res = 0;
+    for (size_t i = 0; i < size; ++i)
+        res += (a[i] - m) * (a[i] - m);
+    return sqrt(res / size);
+}
+
 void benchmark_work_fork(const char *filepath, const char *filename, benchmark_work_callback_f callback, FILE *out_fh)
 {
     struct benchmark_res_html res = benchmark_load_html_file(filepath);
 
+    double iteration_times[NUM_ITERATIONS];
+
+    // measure memory usage on the first iteration
     size_t mem_start    = proc_stat_getCurrentRSS();
     uint64_t time_start = myhtml_hperf_clock();
 
@@ -67,12 +98,31 @@ void benchmark_work_fork(const char *filepath, const char *filename, benchmark_w
     uint64_t time_end = myhtml_hperf_clock();
     size_t mem_end    = proc_stat_getPeakRSS();
 
+    iteration_times[0] = myhtml_absolute_difference(time_start, time_end);
+    long long mem_used = mem_end - mem_start;
+
+    // run NUM_ITERATIONS - 1 iterations
+    for (int i = 1; i < NUM_ITERATIONS; ++i) {
+        uint64_t time_start = myhtml_hperf_clock();
+
+        callback(filename, res.html, res.size);
+
+        uint64_t time_end = myhtml_hperf_clock();
+
+        double work_time = myhtml_absolute_difference(time_start, time_end);
+
+        iteration_times[i] = work_time;
+    }
+
     free(res.html);
 
-    long long mem_used = mem_end - mem_start;
-    double work_time = myhtml_absolute_difference(time_start, time_end);
+    qsort(iteration_times, NUM_ITERATIONS, sizeof(double), double_cmp);
 
-    fprintf(out_fh, "\"%s\";%zu;%0.5f;%lld\n", filename, res.size, work_time, mem_used);
+    double median_work_time = iteration_times[NUM_ITERATIONS / 2];
+    double stddev_work_time = stddev(iteration_times, NUM_ITERATIONS);
+
+    fprintf(out_fh, "\"%s\";%zu;%0.5f;%0.5f;%lld\n", filename, res.size,
+            median_work_time, stddev_work_time, mem_used);
 }
 
 void benchmark_work_readdir_fork(const char *dirpath, benchmark_work_callback_f callback, FILE *out_fh)
