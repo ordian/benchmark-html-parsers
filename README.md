@@ -2,6 +2,8 @@
 
 Benchmark for HTML Parsers conformant with the [HTML5 specification]
 
+![Result on html_samples](/images/time.png)
+
 ## Build and Usage
 
 ### For Mac OS X && Linux
