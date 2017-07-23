@@ -1,7 +1,0 @@
-language: c
-sudo: false
-compiler:
-  - clang
-  - gcc
-install: false
-script: make && make clean
