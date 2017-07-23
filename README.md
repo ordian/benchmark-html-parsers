@@ -22,7 +22,9 @@ make
 ./bm /path/to/dir/with/html/files # e.g. ./bm html_samples
 ```
 
-As an artefact of this invocation we will have a "result" directory with csv files (format: site, file size, time, memory).
+As an artefact of this invocation we will have a "result" directory with csv files.
+
+CSV format: page name; file size; time (s); memory (peak rss in bytes).
 
 To plot the results use `gnuplot`:
 ```shell
