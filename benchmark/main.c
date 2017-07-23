@@ -30,7 +30,7 @@
 
 #ifndef BENCHMARK_BUILD_WITH_ONLY_MyHTML
 #include "gumbo.h"
-#include "html2html_lib.h"
+#include "html5ever_parse_capi.h"
 #endif
 
 // link lib -lhubbub -lparserutils -liconv -ldom -lwapcaplet
@@ -111,9 +111,14 @@ void benchmark_gumbo(const char *filename, const char *html, size_t size, struct
     gumbo_destroy_output(&kGumboDefaultOptions, output);
 }
 
-void benchmark_html5ever(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
+void benchmark_html5ever_rc(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
 {
-    parse_document(html, size, 0);
+    html5ever_parse_document(html, size, 0);
+}
+
+void benchmark_html5ever_arena(const char *filename, const char *html, size_t size, struct benchmark_ctx *ctx)
+{
+    html5ever_parse_document(html, size, 1);
 }
 #endif
 
@@ -222,7 +227,8 @@ int main(int argc, char** argv)
     bentchmark_fork(argv[1], "result/myhtml.csv", benchmark_myhtml);
     
 #ifndef BENCHMARK_BUILD_WITH_ONLY_MyHTML
-    bentchmark_fork(argv[1], "result/html5ever.csv", benchmark_html5ever);
+    bentchmark_fork(argv[1], "result/html5ever_rc.csv", benchmark_html5ever_rc);
+    bentchmark_fork(argv[1], "result/html5ever_arena.csv", benchmark_html5ever_arena);
     bentchmark_fork(argv[1], "result/gumbo.csv", benchmark_gumbo);
 #endif
     

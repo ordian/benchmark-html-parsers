@@ -1,0 +1,13 @@
+[package]
+authors = ["Andronik Ordian <write@reusable.software>"]
+name = "html5ever_parse_capi"
+version = "0.1.0"
+
+[dependencies]
+html5ever = "0.18"
+libc = "0.2.27"
+tendril = "0.3.1"
+typed-arena = "1.3.0"
+
+[lib]
+crate-type = ["staticlib"]

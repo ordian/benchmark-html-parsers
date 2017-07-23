@@ -1,0 +1,4 @@
+bm
+benchmark/*.o
+benchmark/benchmark
+result

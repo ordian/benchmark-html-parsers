@@ -12,17 +12,23 @@ Install these libraries: [myhtml], [gumbo].
 
 **build**
 ```shell
-# build html2html_lib
-(cd html2html_lib && cargo build --release)
+# build html5ever_parse_capi
+(cd html5ever_parse_capi && cargo build --release)
 make
 ```
 
 **usage**
 ```shell
-bm /path/to/dir/with/html/files
+./bm /path/to/dir/with/html/files # e.g. ./bm html_samples
 ```
 
 As an artefact of this invocation we will have a "result" directory with csv files (format: site, file size, time, memory).
+
+To plot the results use `gnuplot`:
+```shell
+gnuplot time.gnuplot # produces result/time.png
+gnuplot mem.gnuplot  # produces result/mem.png
+```
 
 
 ## Troubleshooting

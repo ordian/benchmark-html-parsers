@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Servo (layout engine) - Wikipedia</title>
+<script>document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, "$1client-js$2" );</script>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Servo_(layout_engine)","wgTitle":"Servo (layout engine)","wgCurRevisionId":788642000,"wgRevisionId":788642000,"wgArticleId":37328654,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Articles to be expanded from November 2015","All articles to be expanded","Articles using small message boxes","Layout engines","Mozilla","Rust (programming language)"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Servo_(layout_engine)","wgRelevantArticleId":37328654,"wgRequestId":"WXCdLwpAADgAAAGELNsAAACL","wgIsProbablyEditable":true,"wgRelevantPageIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgFlaggedRevsParams":{"tags":{}},"wgStableRevisionId":null,"wgWikiEditorEnabledModules":{"toolbar":true,"preview":false,"publish":false},"wgBetaFeaturesFeatures":[],"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":false,"wgPopupsShouldSendModuleToUser":false,"wgPopupsConflictsWithNavPopupGadget":false,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","usePageImages":true,"usePageDescriptions":true},"wgPreferredVariant":"en","wgMFExpandAllSectionsUserOption":false,"wgMFDisplayWikibaseDescriptions":{"search":true,"nearby":true,"watchlist":true,"tagline":false},"wgRelatedArticles":null,"wgRelatedArticlesUseCirrusSearch":true,"wgRelatedArticlesOnlyUseCirrusSearch":false,"wgULSCurrentAutonym":"English","wgNoticeProject":"wikipedia","wgCentralNoticeCookiesToDelete":[],"wgCentralNoticeCategoriesUsingLegacy":["Fundraising","fundraising"],"wgCategoryTreePageCategoryOptions":"{\"mode\":0,\"hideprefix\":20,\"showcount\":true,\"namespaces\":false}","wgWikibaseItemId":"Q7455927","wgCentralAuthMobileDomain":false,"wgVisualEditorToolbarScrollOffset":0,"wgVisualEditorUnsupportedEditParams":["preload","preloadparams","preloadtitle","undo","undoafter","veswitched"],"wgEditSubmitButtonLabelPublish":false});mw.loader.state({"ext.gadget.charinsert-styles":"ready","ext.globalCssJs.user.styles":"ready","ext.globalCssJs.site.styles":"ready","site.styles":"ready","noscript":"ready","user.styles":"ready","user":"ready","user.options":"loading","user.tokens":"loading","ext.cite.styles":"ready","wikibase.client.init":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.uls.interlanguage":"ready","ext.wikimediaBadges":"ready","mediawiki.legacy.shared":"ready","mediawiki.legacy.commonPrint":"ready","mediawiki.sectionAnchor":"ready","mediawiki.skinning.interface":"ready","skins.vector.styles":"ready","ext.globalCssJs.user":"ready","ext.globalCssJs.site":"ready"});mw.loader.implement("user.options@0bhc5ha",function($,jQuery,require,module){mw.user.options.set([]);});mw.loader.implement("user.tokens@1dqfd7l",function ( $, jQuery, require, module ) {
+mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});/*@nomin*/
+
+});mw.loader.load(["ext.cite.a11y","site","mediawiki.page.startup","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.toc","mediawiki.searchSuggest","ext.gadget.teahouse","ext.gadget.ReferenceTooltips","ext.gadget.watchlist-notice","ext.gadget.DRN-wizard","ext.gadget.charinsert","ext.gadget.refToolbar","ext.gadget.extra-toolbar-buttons","ext.gadget.switcher","ext.gadget.featured-articles-links","ext.centralauth.centralautologin","mmv.head","mmv.bootstrap.autostart","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.eventLogging.subscriber","ext.wikimediaEvents","ext.navigationTiming","ext.uls.eventlogger","ext.uls.init","ext.uls.interface","ext.centralNotice.geoIP","ext.centralNotice.startUp","skins.vector.js"]);});</script>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=ext.cite.styles%7Cext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.sectionAnchor%7Cmediawiki.skinning.interface%7Cskins.vector.styles%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=ext.gadget.charinsert-styles&amp;only=styles&amp;skin=vector"/>
+<link rel="stylesheet" href="/w/load.php?debug=false&amp;lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<meta name="generator" content="MediaWiki 1.30.0-wmf.9"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/e/e8/Servo_screenshot.png"/>
+<link rel="alternate" href="android-app://org.wikipedia/http/en.m.wikipedia.org/wiki/Servo_(layout_engine)"/>
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit"/>
+<link rel="edit" title="Edit this page" href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikipedia (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="license" href="//creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikipedia.org/wiki/Servo_(layout_engine)"/>
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Servo_layout_engine rootpage-Servo_layout_engine skin-vector action-view">		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice" class="mw-body-content"><!-- CentralNotice --></div>
+						<div class="mw-indicators mw-body-content">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">Servo (layout engine)</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div class="mw-parser-output"><table class="infobox vevent" style="width:22em">
+<caption class="summary">Servo</caption>
+<tr>
+<td colspan="2" style="text-align:center"><a href="/wiki/File:Servo_screenshot.png" class="image" title="Screenshot of Servo rendering the Servo preview release page"><img alt="Screenshot of Servo rendering the Servo preview release page" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Servo_screenshot.png/300px-Servo_screenshot.png" width="300" height="219" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Servo_screenshot.png/450px-Servo_screenshot.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Servo_screenshot.png/600px-Servo_screenshot.png 2x" data-file-width="1058" data-file-height="774" /></a>
+<div>Screenshot of Servo rendering the Servo preview release page</div>
+</td>
+</tr>
+<tr>
+<th scope="row" style="white-space: nowrap;"><a href="/wiki/Software_developer" title="Software developer">Developer(s)</a></th>
+<td><a href="/wiki/Mozilla" title="Mozilla">Mozilla</a> Research, <a href="/wiki/Samsung" title="Samsung">Samsung</a> and others</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align:center"></td>
+</tr>
+<tr>
+<th scope="row" style="white-space: nowrap;"><a href="/wiki/Software_release_life_cycle" title="Software release life cycle">Preview release</a></th>
+<td>
+<div style="margin:0px;"><a href="/wiki/Nightly_build" class="mw-redirect" title="Nightly build">Nightly build</a><sup id="cite_ref-1" class="reference"><a href="#cite_note-1">[1]</a></sup> / June&#160;30, 2016<span class="noprint">; 12 months ago</span><span style="display:none">&#160;(<span class="bday dtstart published updated">2016-06-30</span>)</span></div>
+</td>
+</tr>
+<tr style="display:none">
+<td colspan="2"></td>
+</tr>
+<tr>
+<th scope="row" style="white-space: nowrap;"><a href="/wiki/Repository_(version_control)" title="Repository (version control)">Repository</a></th>
+<td><span class="url"><a rel="nofollow" class="external text" href="https://github.com/servo/servo">github<wbr />.com<wbr />/servo<wbr />/servo</a></span></td>
+</tr>
+<tr>
+<th scope="row" style="white-space: nowrap;">Written in</th>
+<td><a href="/wiki/Rust_(programming_language)" title="Rust (programming language)">Rust</a></td>
+</tr>
+<tr>
+<th scope="row" style="white-space: nowrap;"><a href="/wiki/Operating_system" title="Operating system">Operating system</a></th>
+<td><a href="/wiki/Cross-platform" title="Cross-platform">Cross-platform</a></td>
+</tr>
+<tr>
+<th scope="row" style="white-space: nowrap;"><a href="/wiki/Software_categories#Broad_categories" title="Software categories">Type</a></th>
+<td><a href="/wiki/Layout_engine" title="Layout engine">Layout engine</a></td>
+</tr>
+<tr>
+<th scope="row" style="white-space: nowrap;"><a href="/wiki/Software_license" title="Software license">License</a></th>
+<td><a href="/wiki/Mozilla_Public_License" title="Mozilla Public License">MPL</a> 2.0<sup id="cite_ref-2" class="reference"><a href="#cite_note-2">[2]</a></sup><sup id="cite_ref-3" class="reference"><a href="#cite_note-3">[3]</a></sup></td>
+</tr>
+<tr>
+<th scope="row" style="white-space: nowrap;">Website</th>
+<td><span class="url"><a rel="nofollow" class="external text" href="https://servo.org">servo<wbr />.org</a></span></td>
+</tr>
+</table>
+<p><b>Servo</b> is an experimental <a href="/wiki/Web_browser" title="Web browser">web browser</a> <a href="/wiki/Layout_engine" title="Layout engine">layout engine</a> being developed by <a href="/wiki/Mozilla" title="Mozilla">Mozilla</a> Research, with <a href="/wiki/Samsung" title="Samsung">Samsung</a> porting it to <a href="/wiki/Android_(operating_system)" title="Android (operating system)">Android</a> and <a href="/wiki/ARM_architecture" title="ARM architecture">ARM processors</a>.<sup id="cite_ref-4" class="reference"><a href="#cite_note-4">[4]</a></sup> The prototype seeks to create a highly <a href="/wiki/Parallel_computing" title="Parallel computing">parallel</a> environment, in which many components (such as rendering, layout, HTML parsing, image decoding, etc.) are handled by fine-grained, isolated <a href="/wiki/Task_parallelism" title="Task parallelism">tasks</a>. <a href="/wiki/Source_code" title="Source code">Source code</a> for the project is written in the <a href="/wiki/Rust_(programming_language)" title="Rust (programming language)">Rust</a> programming language.</p>
+<p>Two significant components used by Servo are based on pre-existing C++ code from Mozilla. <a href="/wiki/JavaScript" title="JavaScript">JavaScript</a> support is provided by <a href="/wiki/SpiderMonkey_(software)" class="mw-redirect" title="SpiderMonkey (software)">SpiderMonkey</a>, and the 2D graphics library <a href="/wiki/Mozilla_Azure" title="Mozilla Azure">Azure</a> is used to interface with <a href="/wiki/OpenGL" title="OpenGL">OpenGL</a> and <a href="/wiki/Direct3D" title="Direct3D">Direct3D</a>.<sup id="cite_ref-5" class="reference"><a href="#cite_note-5">[5]</a></sup></p>
+<p>Servo is named after <a href="/wiki/Tom_Servo" title="Tom Servo">Tom Servo</a>, a robot from the television show <i><a href="/wiki/Mystery_Science_Theater_3000" title="Mystery Science Theater 3000">Mystery Science Theater 3000</a></i>.<sup id="cite_ref-6" class="reference"><a href="#cite_note-6">[6]</a></sup></p>
+<p></p>
+<div id="toc" class="toc">
+<div class="toctitle">
+<h2>Contents</h2>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Features"><span class="tocnumber">1</span> <span class="toctext">Features</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#History"><span class="tocnumber">2</span> <span class="toctext">History</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Servo_Project"><span class="tocnumber">3</span> <span class="toctext">Servo Project</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Project_Goals"><span class="tocnumber">3.1</span> <span class="toctext">Project Goals</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Relationship_to_Firefox"><span class="tocnumber">3.2</span> <span class="toctext">Relationship to Firefox</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Chromium_Embedded_Framework"><span class="tocnumber">3.3</span> <span class="toctext">Chromium Embedded Framework</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Project_Structure"><span class="tocnumber">3.4</span> <span class="toctext">Project Structure</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#References"><span class="tocnumber">5</span> <span class="toctext">References</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#External_links"><span class="tocnumber">6</span> <span class="toctext">External links</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="Features">Features</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=1" title="Edit section: Features">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="thumb tright">
+<div class="thumbinner" style="width:222px;"><a href="/wiki/File:Mozilla_Servo_showing_ACID2.png" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Mozilla_Servo_showing_ACID2.png/220px-Mozilla_Servo_showing_ACID2.png" width="220" height="177" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Mozilla_Servo_showing_ACID2.png/330px-Mozilla_Servo_showing_ACID2.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Mozilla_Servo_showing_ACID2.png/440px-Mozilla_Servo_showing_ACID2.png 2x" data-file-width="914" data-file-height="736" /></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="/wiki/File:Mozilla_Servo_showing_ACID2.png" class="internal" title="Enlarge"></a></div>
+Mozilla Servo showing the <a href="/wiki/Acid2" title="Acid2">Acid2</a> test</div>
+</div>
+</div>
+<table class="plainlinks metadata ambox mbox-small-left ambox-content" role="presentation">
+<tr>
+<td class="mbox-image"><a href="/wiki/File:Wiki_letter_w_cropped.svg" class="image"><img alt="[icon]" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Wiki_letter_w_cropped.svg/20px-Wiki_letter_w_cropped.svg.png" width="20" height="14" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Wiki_letter_w_cropped.svg/30px-Wiki_letter_w_cropped.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Wiki_letter_w_cropped.svg/40px-Wiki_letter_w_cropped.svg.png 2x" data-file-width="44" data-file-height="31" /></a></td>
+<td class="mbox-text"><span class="mbox-text-span"><b>This section needs expansion</b>. <small>You can help by <a class="external text" href="//en.wikipedia.org/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=">adding to it</a>.</small> <small><i>(November 2015)</i></small></span></td>
+</tr>
+</table>
+<p>Development on Servo is still at an early stage; however, it can already render Wikipedia and <a href="/wiki/GitHub" title="GitHub">GitHub</a>, and successfully passes the <a href="/wiki/Acid2" title="Acid2">Acid2</a> test. It features innovations like a parallel layout algorithm and its own <a href="/wiki/Cascading_Style_Sheets" title="Cascading Style Sheets">CSS3</a> and <a href="/wiki/HTML5" title="HTML5">HTML5</a> parser implemented in <a href="/wiki/Rust_(programming_language)" title="Rust (programming language)">Rust</a>.<sup id="cite_ref-7" class="reference"><a href="#cite_note-7">[7]</a></sup><sup id="cite_ref-8" class="reference"><a href="#cite_note-8">[8]</a></sup></p>
+<p>Servo makes use of <a href="/wiki/GPU" class="mw-redirect" title="GPU">GPU</a> acceleration to render web pages more quickly.<sup id="cite_ref-9" class="reference"><a href="#cite_note-9">[9]</a></sup> Servo is significantly faster, in certain benchmarks, than <a href="/wiki/Gecko_(software)" title="Gecko (software)">Gecko</a>, Mozilla's other layout and rendering engine, as of November 2014.<sup id="cite_ref-10" class="reference"><a href="#cite_note-10">[10]</a></sup><sup id="cite_ref-11" class="reference"><a href="#cite_note-11">[11]</a></sup></p>
+<h2><span class="mw-headline" id="History">History</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=2" title="Edit section: History">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="thumb tright">
+<div class="thumbinner" style="width:222px;"><a href="/wiki/File:Mozilla_Research_projects.png" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Mozilla_Research_projects.png/220px-Mozilla_Research_projects.png" width="220" height="114" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Mozilla_Research_projects.png/330px-Mozilla_Research_projects.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Mozilla_Research_projects.png/440px-Mozilla_Research_projects.png 2x" data-file-width="1168" data-file-height="606" /></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="/wiki/File:Mozilla_Research_projects.png" class="internal" title="Enlarge"></a></div>
+Mozilla Research's projects diagram featuring Servo</div>
+</div>
+</div>
+<p>Development of Servo began in 2013. The very first <a href="/wiki/Commit_(version_control)" title="Commit (version control)">commit</a> on 8 February 2012 did not contain any <a href="/wiki/Source_code" title="Source code">source code</a>.<sup id="cite_ref-12" class="reference"><a href="#cite_note-12">[12]</a></sup> The first rudimentary code commit occurred on 27 March 2012.<sup id="cite_ref-13" class="reference"><a href="#cite_note-13">[13]</a></sup></p>
+<p>On 3 April 2013 Mozilla announced that they and Samsung collaborate on Servo.<sup id="cite_ref-14" class="reference"><a href="#cite_note-14">[14]</a></sup><sup id="cite_ref-15" class="reference"><a href="#cite_note-15">[15]</a></sup></p>
+<p>As of the 30th of June 2016, a preview version is available for download.<sup id="cite_ref-16" class="reference"><a href="#cite_note-16">[16]</a></sup> This is marked as 0.0.1 and is available for Mac and Linux.</p>
+<p>As of the 13th of April 2017, builds are now available for Windows as well.<sup id="cite_ref-17" class="reference"><a href="#cite_note-17">[17]</a></sup></p>
+<h2><span class="mw-headline" id="Servo_Project">Servo Project</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=3" title="Edit section: Servo Project">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Project_Goals">Project Goals</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=4" title="Edit section: Project Goals">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>The Servo project itself is officially a research project. The goal is to create a new layout engine using a modern programming language (Rust), and using parallelism and code safety, to achieve greater security and performance versus contemporary browsers.</p>
+<p>Using Browser.HTML as a GUI, Servo can act as a standalone browser. This configuration of the browser was originally intended as a research project and proof-of-concept.<sup id="cite_ref-18" class="reference"><a href="#cite_note-18">[18]</a></sup></p>
+<h3><span class="mw-headline" id="Relationship_to_Firefox">Relationship to Firefox</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=5" title="Edit section: Relationship to Firefox">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Servo developers plan to merge parts of Servo into Gecko, thus lending the Servo project's advancements to Firefox.<sup id="cite_ref-19" class="reference"><a href="#cite_note-19">[19]</a></sup><sup id="cite_ref-20" class="reference"><a href="#cite_note-20">[20]</a></sup></p>
+<h3><span class="mw-headline" id="Chromium_Embedded_Framework">Chromium Embedded Framework</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=6" title="Edit section: Chromium Embedded Framework">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Servo intends to re-implement the <a href="/wiki/Chromium_Embedded_Framework" title="Chromium Embedded Framework">Chromium Embedded Framework</a> (CEF) API. This would allow Servo to be used as a drop-in replacement for Chromium in applications using CEF, and positions Servo as a competitor to Chromium in these cases.<sup id="cite_ref-21" class="reference"><a href="#cite_note-21">[21]</a></sup></p>
+<h3><span class="mw-headline" id="Project_Structure">Project Structure</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=7" title="Edit section: Project Structure">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>The Servo project is sponsored and maintained by Mozilla, with several Mozilla employees contributing a majority of code to the project. As an open-source, free software project, it is open to contributions from anyone.<sup id="cite_ref-22" class="reference"><a href="#cite_note-22">[22]</a></sup> Servo, including all community contributions, is licensed under the Mozilla Public License version 2.0.</p>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=8" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div role="navigation" aria-label="Portals" class="noprint portal plainlist tright" style="margin:0.5em 0 0.5em 1em;border:solid #aaa 1px">
+<ul style="display:table;box-sizing:border-box;padding:0.1em;max-width:175px;background:#f9f9f9;font-size:85%;line-height:110%;font-style:italic;font-weight:bold">
+<li style="display:table-row"><span style="display:table-cell;padding:0.2em;vertical-align:middle;text-align:center"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/3/31/Free_and_open-source_software_logo_%282009%29.svg/28px-Free_and_open-source_software_logo_%282009%29.svg.png" width="28" height="28" class="noviewer" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/3/31/Free_and_open-source_software_logo_%282009%29.svg/42px-Free_and_open-source_software_logo_%282009%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/3/31/Free_and_open-source_software_logo_%282009%29.svg/56px-Free_and_open-source_software_logo_%282009%29.svg.png 2x" data-file-width="512" data-file-height="512" /></span><span style="display:table-cell;padding:0.2em 0.2em 0.2em 0.3em;vertical-align:middle"><a href="/wiki/Portal:Free_software" class="mw-redirect" title="Portal:Free software">Free software portal</a></span></li>
+</ul>
+</div>
+<ul>
+<li><a href="/wiki/Gecko_(layout_engine)" class="mw-redirect" title="Gecko (layout engine)">Gecko (layout engine)</a></li>
+<li><a href="/wiki/Quantum_(software)" title="Quantum (software)">Quantum (software)</a></li>
+</ul>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=9" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="reflist columns references-column-width" style="-moz-column-width: 30em; -webkit-column-width: 30em; column-width: 30em; list-style-type: decimal;">
+<ol class="references">
+<li id="cite_note-1"><span class="mw-cite-backlink"><b><a href="#cite_ref-1">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://servo-builds.s3.amazonaws.com/index.html">"Servo Developer Preview Downloads"</a>. <i>servo-builds.s3.amazonaws.com</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-07-06</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Servo+Developer+Preview+Downloads&amp;rft.genre=unknown&amp;rft.jtitle=servo-builds.s3.amazonaws.com&amp;rft_id=https%3A%2F%2Fservo-builds.s3.amazonaws.com%2Findex.html&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-2"><span class="mw-cite-backlink"><b><a href="#cite_ref-2">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://www.mozilla.org/en-US/about/legal/eula/">"Mozilla Foundation End-User Licensing Agreements"</a>. <i>Mozilla</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-07-06</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Mozilla+Foundation+End-User+Licensing+Agreements&amp;rft.genre=unknown&amp;rft.jtitle=Mozilla&amp;rft_id=https%3A%2F%2Fwww.mozilla.org%2Fen-US%2Fabout%2Flegal%2Feula%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-3"><span class="mw-cite-backlink"><b><a href="#cite_ref-3">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://www.mozilla.org/foundation/licensing.html">"Mozilla Licensing Policies"</a>. mozilla.org<span class="reference-accessdate">. Retrieved <span class="nowrap">2013-03-26</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.btitle=Mozilla+Licensing+Policies&amp;rft.genre=unknown&amp;rft.pub=mozilla.org&amp;rft_id=https%3A%2F%2Fwww.mozilla.org%2Ffoundation%2Flicensing.html&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-4"><span class="mw-cite-backlink"><b><a href="#cite_ref-4">^</a></b></span> <span class="reference-text"><cite class="citation news"><a rel="nofollow" class="external text" href="https://arstechnica.com/information-technology/2013/04/samsung-teams-up-with-mozilla-to-build-browser-engine-for-multicore-machines/">"Samsung teams up with Mozilla to build browser engine for multicore machines"</a>. <a href="/wiki/Ars_Technica" title="Ars Technica">Ars Technica</a>. 2013-04-03<span class="reference-accessdate">. Retrieved <span class="nowrap">2014-10-24</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Samsung+teams+up+with+Mozilla+to+build+browser+engine+for+multicore+machines&amp;rft.date=2013-04-03&amp;rft.genre=article&amp;rft_id=https%3A%2F%2Farstechnica.com%2Finformation-technology%2F2013%2F04%2Fsamsung-teams-up-with-mozilla-to-build-browser-engine-for-multicore-machines%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-5"><span class="mw-cite-backlink"><b><a href="#cite_ref-5">^</a></b></span> <span class="reference-text"><cite class="citation web">Willis, Nathan (2015-06-17). <a rel="nofollow" class="external text" href="https://lwn.net/Articles/647969/">"Parallel page rendering with Mozilla Servo"</a>. <a href="/wiki/LWN.net" title="LWN.net">LWN.net</a><span class="reference-accessdate">. Retrieved <span class="nowrap">2015-06-27</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.aufirst=Nathan&amp;rft.aulast=Willis&amp;rft.btitle=Parallel+page+rendering+with+Mozilla+Servo&amp;rft.date=2015-06-17&amp;rft.genre=unknown&amp;rft.pub=LWN.net&amp;rft_id=https%3A%2F%2Flwn.net%2FArticles%2F647969%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-6"><span class="mw-cite-backlink"><b><a href="#cite_ref-6">^</a></b></span> <span class="reference-text"><cite class="citation web">Eich, Brendan (Oct 13, 2012). <a rel="nofollow" class="external text" href="https://github.com/mozilla/servo/issues/111#issuecomment-9415000">"Add a new UI crate"</a><span class="reference-accessdate">. Retrieved <span class="nowrap">2014-04-02</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.aufirst=Brendan&amp;rft.aulast=Eich&amp;rft.btitle=Add+a+new+UI+crate&amp;rft.date=2012-10-13&amp;rft.genre=unknown&amp;rft_id=https%3A%2F%2Fgithub.com%2Fmozilla%2Fservo%2Fissues%2F111%23issuecomment-9415000&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-7"><span class="mw-cite-backlink"><b><a href="#cite_ref-7">^</a></b></span> <span class="reference-text"><cite class="citation web">Moffitt, Jack (April 17, 2014). <a rel="nofollow" class="external text" href="https://blog.mozilla.org/research/2014/04/17/another-big-milestone-for-servo-acid2/">"Another Big Milestone for Servo—Acid2"</a><span class="reference-accessdate">. Retrieved <span class="nowrap">2015-11-26</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.aufirst=Jack&amp;rft.aulast=Moffitt&amp;rft.btitle=Another+Big+Milestone+for+Servo%E2%80%94Acid2&amp;rft.date=2014-04-17&amp;rft.genre=unknown&amp;rft_id=https%3A%2F%2Fblog.mozilla.org%2Fresearch%2F2014%2F04%2F17%2Fanother-big-milestone-for-servo-acid2%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-8"><span class="mw-cite-backlink"><b><a href="#cite_ref-8">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://blog.servo.org/2015/05/01/forward/">"Servo Continues Pushing Forward"</a>. May 1, 2015<span class="reference-accessdate">. Retrieved <span class="nowrap">2015-11-26</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.btitle=Servo+Continues+Pushing+Forward&amp;rft.date=2015-05-01&amp;rft.genre=unknown&amp;rft_id=https%3A%2F%2Fblog.servo.org%2F2015%2F05%2F01%2Fforward%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-9"><span class="mw-cite-backlink"><b><a href="#cite_ref-9">^</a></b></span> <span class="reference-text"><cite class="citation web">Bergstrom, Lars. <a rel="nofollow" class="external text" href="https://groups.google.com/forum/m/#!topic/mozilla.dev.servo/3bH1KaqJq0s">"Mozilla's Project Quantum and Servo"</a>. <i>mozilla.dev.servo - Google Groups</i><span class="reference-accessdate">. Retrieved <span class="nowrap">9 November</span> 2016</span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Mozilla%27s+Project+Quantum+and+Servo&amp;rft.aufirst=Lars&amp;rft.aulast=Bergstrom&amp;rft.genre=unknown&amp;rft.jtitle=mozilla.dev.servo+-+Google+Groups&amp;rft_id=https%3A%2F%2Fgroups.google.com%2Fforum%2Fm%2F%23%21topic%2Fmozilla.dev.servo%2F3bH1KaqJq0s&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-10"><span class="mw-cite-backlink"><b><a href="#cite_ref-10">^</a></b></span> <span class="reference-text"><cite class="citation web">Larabel, Michael. <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTgzNDA">"Mozilla's Servo Engine Is Crazy Fast Compared To Gecko"</a>. <i>Phoronix</i><span class="reference-accessdate">. Retrieved <span class="nowrap">10 May</span> 2016</span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Mozilla%27s+Servo+Engine+Is+Crazy+Fast+Compared+To+Gecko&amp;rft.aufirst=Michael&amp;rft.aulast=Larabel&amp;rft.genre=unknown&amp;rft.jtitle=Phoronix&amp;rft_id=https%3A%2F%2Fwww.phoronix.com%2Fscan.php%3Fpage%3Dnews_item%26px%3DMTgzNDA&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-11"><span class="mw-cite-backlink"><b><a href="#cite_ref-11">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Google-Servo-Perf-Comparison">"Mozilla's Servo Is Whooping The Other Browsers In Performance"</a>. <i>Phoronix</i><span class="reference-accessdate">. Retrieved <span class="nowrap">10 May</span> 2016</span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Mozilla%27s+Servo+Is+Whooping+The+Other+Browsers+In+Performance&amp;rft.genre=unknown&amp;rft.jtitle=Phoronix&amp;rft_id=https%3A%2F%2Fwww.phoronix.com%2Fscan.php%3Fpage%3Dnews_item%26px%3DGoogle-Servo-Perf-Comparison&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-12"><span class="mw-cite-backlink"><b><a href="#cite_ref-12">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://github.com/servo/servo/commit/ce30d4520d67f2c6ef960571a9b3e450c5dcbebe">"initial add · servo/servo@ce30d45"</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.btitle=initial+add+%C2%B7+servo%2Fservo%40ce30d45&amp;rft.genre=unknown&amp;rft_id=https%3A%2F%2Fgithub.com%2Fservo%2Fservo%2Fcommit%2Fce30d4520d67f2c6ef960571a9b3e450c5dcbebe&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-13"><span class="mw-cite-backlink"><b><a href="#cite_ref-13">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://github.com/servo/servo/commit/783455f684bc613dba25d5c2e54157c336093f35">"Add some stubs and a makefile · servo/servo@783455f"</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.btitle=Add+some+stubs+and+a+makefile+%C2%B7+servo%2Fservo%40783455f&amp;rft.genre=unknown&amp;rft_id=https%3A%2F%2Fgithub.com%2Fservo%2Fservo%2Fcommit%2F783455f684bc613dba25d5c2e54157c336093f35&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-14"><span class="mw-cite-backlink"><b><a href="#cite_ref-14">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://blog.mozilla.org/blog/2013/04/03/mozilla-and-samsung-collaborate-on-next-generation-web-browser-engine/">"Mozilla and Samsung Collaborate on Next Generation Web Browser Engine"</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.btitle=Mozilla+and+Samsung+Collaborate+on+Next+Generation+Web+Browser+Engine&amp;rft.genre=unknown&amp;rft_id=https%3A%2F%2Fblog.mozilla.org%2Fblog%2F2013%2F04%2F03%2Fmozilla-and-samsung-collaborate-on-next-generation-web-browser-engine%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-15"><span class="mw-cite-backlink"><b><a href="#cite_ref-15">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="http://www.androidcentral.com/mozilla-samsung-team-servo-next-gen-browser-engine">"Mozilla, Samsung team up on 'Servo' next-gen browser engine"</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.btitle=Mozilla%2C+Samsung+team+up+on+%27Servo%27+next-gen+browser+engine&amp;rft.genre=unknown&amp;rft_id=http%3A%2F%2Fwww.androidcentral.com%2Fmozilla-samsung-team-servo-next-gen-browser-engine&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-16"><span class="mw-cite-backlink"><b><a href="#cite_ref-16">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="http://blog.servo.org/2016/06/30/servo-nightlies/">"Servo Nightly Builds Available"</a>. <i>Servo Blog</i>. 30 June 2016.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Servo+Nightly+Builds+Available&amp;rft.date=2016-06-30&amp;rft.genre=unknown&amp;rft.jtitle=Servo+Blog&amp;rft_id=http%3A%2F%2Fblog.servo.org%2F2016%2F06%2F30%2Fservo-nightlies%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-17"><span class="mw-cite-backlink"><b><a href="#cite_ref-17">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://blog.servo.org/2017/04/13/windows/">"Windows nightly builds now available"</a>. <i>Servo Blog</i>. 13 April 2017.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Windows+nightly+builds+now+available&amp;rft.date=2017-04-13&amp;rft.genre=unknown&amp;rft.jtitle=Servo+Blog&amp;rft_id=https%3A%2F%2Fblog.servo.org%2F2017%2F04%2F13%2Fwindows%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-18"><span class="mw-cite-backlink"><b><a href="#cite_ref-18">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://github.com/servo/servo/wiki/Design">"Design · servo/servo Wiki"</a>. <i>GitHub</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-10-28</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Design+%C2%B7+servo%2Fservo+Wiki&amp;rft.genre=unknown&amp;rft.jtitle=GitHub&amp;rft_id=https%3A%2F%2Fgithub.com%2Fservo%2Fservo%2Fwiki%2FDesign&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-19"><span class="mw-cite-backlink"><b><a href="#cite_ref-19">^</a></b></span> <span class="reference-text"><cite class="citation web"><a rel="nofollow" class="external text" href="https://wiki.mozilla.org/Quantum">"Quantum - MozillaWiki"</a>. <i>wiki.mozilla.org</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-10-28</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Quantum+-+MozillaWiki&amp;rft.genre=unknown&amp;rft.jtitle=wiki.mozilla.org&amp;rft_id=https%3A%2F%2Fwiki.mozilla.org%2FQuantum&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-20"><span class="mw-cite-backlink"><b><a href="#cite_ref-20">^</a></b></span> <span class="reference-text"><cite class="citation web">Bryant, David (2016-10-27). <a rel="nofollow" class="external text" href="https://medium.com/mozilla-tech/a-quantum-leap-for-the-web-a3b7174b3c12">"A Quantum Leap for the Web – Mozilla Tech"</a>. <i>Medium</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-10-28</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=A+Quantum+Leap+for+the+Web+%E2%80%93+Mozilla+Tech&amp;rft.aufirst=David&amp;rft.aulast=Bryant&amp;rft.date=2016-10-27&amp;rft.genre=unknown&amp;rft.jtitle=Medium&amp;rft_id=https%3A%2F%2Fmedium.com%2Fmozilla-tech%2Fa-quantum-leap-for-the-web-a3b7174b3c12&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-21"><span class="mw-cite-backlink"><b><a href="#cite_ref-21">^</a></b></span> <span class="reference-text"><cite class="citation news">Blumenkrantz, Mike; Bergstrom, Lars (2015-05-13). <a rel="nofollow" class="external text" href="https://blogs.s-osg.org/servo-the-embeddable-browser-engine/">"Servo: The Embeddable Browser Engine - Samsung Open Source Group Blog"</a>. <i>Samsung Open Source Group Blog</i><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-10-28</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.atitle=Servo%3A+The+Embeddable+Browser+Engine+-+Samsung+Open+Source+Group+Blog&amp;rft.au=Bergstrom%2C+Lars&amp;rft.aufirst=Mike&amp;rft.aulast=Blumenkrantz&amp;rft.date=2015-05-13&amp;rft.genre=article&amp;rft.jtitle=Samsung+Open+Source+Group+Blog&amp;rft_id=https%3A%2F%2Fblogs.s-osg.org%2Fservo-the-embeddable-browser-engine%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+<li id="cite_note-22"><span class="mw-cite-backlink"><b><a href="#cite_ref-22">^</a></b></span> <span class="reference-text"><cite class="citation web">Willis, Nathan (2015-06-17). <a rel="nofollow" class="external text" href="https://lwn.net/Articles/647969/">"Parallel page rendering with Mozilla Servo"</a>. <a href="/wiki/LWN.net" title="LWN.net">LWN.net</a><span class="reference-accessdate">. Retrieved <span class="nowrap">2016-10-30</span></span>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3AServo+%28layout+engine%29&amp;rft.aufirst=Nathan&amp;rft.aulast=Willis&amp;rft.btitle=Parallel+page+rendering+with+Mozilla+Servo&amp;rft.date=2015-06-17&amp;rft.genre=unknown&amp;rft.pub=LWN.net&amp;rft_id=https%3A%2F%2Flwn.net%2FArticles%2F647969%2F&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display:none;">&#160;</span></span></span></li>
+</ol>
+</div>
+<h2><span class="mw-headline" id="External_links">External links</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit&amp;section=10" title="Edit section: External links">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<table role="presentation" class="mbox-small plainlinks sistersitebox" style="background-color:#f9f9f9;border:1px solid #aaa;color:#000">
+<tr>
+<td class="mbox-image"><img alt="" src="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/30px-Commons-logo.svg.png" width="30" height="40" class="noviewer" srcset="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/45px-Commons-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/59px-Commons-logo.svg.png 2x" data-file-width="1024" data-file-height="1376" /></td>
+<td class="mbox-text plainlist">Wikimedia Commons has media related to <i><b><a href="https://commons.wikimedia.org/wiki/Category:Servo_(layout_engine)" class="extiw" title="commons:Category:Servo (layout engine)">Servo (layout engine)</a></b></i>.</td>
+</tr>
+</table>
+<ul>
+<li><span class="official-website"><span class="url"><a rel="nofollow" class="external text" href="https://servo.org">Official website</a></span></span></li>
+<li><a rel="nofollow" class="external text" href="https://changelog.com/podcast/228">"The Changelog #228: Servo and Rust with Jack Moffitt"</a>. 2016-11-18.</li>
+</ul>
+<div role="navigation" class="navbox" aria-labelledby="Layout_engines" style="padding:3px">
+<table class="nowraplinks collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Layout_engines" title="Template:Layout engines"><abbr title="View this template" style=";;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Layout_engines" title="Template talk:Layout engines"><abbr title="Discuss this template" style=";;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Layout_engines&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">e</abbr></a></li>
+</ul>
+</div>
+<div id="Layout_engines" style="font-size:114%;margin:0 4em"><a href="/wiki/Web_browser_engine" title="Web browser engine">Layout engines</a></div>
+</th>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Active</th>
+<td class="navbox-list navbox-odd hlist" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Blink_(web_engine)" title="Blink (web engine)">Blink</a></li>
+<li><a href="/wiki/EdgeHTML" title="EdgeHTML">EdgeHTML</a></li>
+<li><a href="/wiki/Gecko_(software)" title="Gecko (software)">Gecko</a></li>
+<li><a href="/wiki/Goanna_(software)" title="Goanna (software)">Goanna</a></li>
+<li><a href="/wiki/KHTML" title="KHTML">KHTML</a></li>
+<li><a href="/wiki/MARTHA_(layout_engine)" title="MARTHA (layout engine)">MARTHA</a></li>
+<li><a href="/wiki/Prince_(software)" title="Prince (software)">Prince</a></li>
+<li><a href="/wiki/Qt_(software)" title="Qt (software)">QtWebEngine</a></li>
+<li><a class="mw-selflink selflink">Servo</a></li>
+<li><a href="/wiki/WebKit" title="WebKit">WebKit</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Discontinued</th>
+<td class="navbox-list navbox-even hlist" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Amaya_(web_browser)" class="mw-redirect" title="Amaya (web browser)">Amaya</a></li>
+<li><a href="/wiki/Boxely" title="Boxely">Boxely</a></li>
+<li><a href="/wiki/Gazelle_(web_browser)" title="Gazelle (web browser)">Gazelle</a></li>
+<li><a href="/wiki/GtkHTML" title="GtkHTML">GtkHTML</a></li>
+<li><a href="/wiki/HTMLayout" title="HTMLayout">HTMLayout</a></li>
+<li><a href="/wiki/ICab" title="ICab">iCab</a></li>
+<li><a href="/wiki/Mariner_(layout_engine)" title="Mariner (layout engine)">Mariner</a></li>
+<li><a href="/wiki/Presto_(layout_engine)" title="Presto (layout engine)">Presto</a></li>
+<li><a href="/wiki/Tasman_(layout_engine)" title="Tasman (layout engine)">Tasman</a></li>
+<li><a href="/wiki/Tkhtml" title="Tkhtml">Tkhtml</a></li>
+<li><a href="/wiki/Trident_(layout_engine)" title="Trident (layout engine)">Trident</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%"><a href="/wiki/Comparison_of_web_browser_engines" title="Comparison of web browser engines">Comparisons</a></th>
+<td class="navbox-list navbox-odd hlist" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Comparison_of_layout_engines_(HTML)" title="Comparison of layout engines (HTML)">HTML</a>
+<ul>
+<li><a href="/wiki/Comparison_of_layout_engines_(non-standard_HTML)" title="Comparison of layout engines (non-standard HTML)">non-standard HTML</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Comparison_of_layout_engines_(HTML5)" title="Comparison of layout engines (HTML5)">HTML5</a>
+<ul>
+<li><a href="/wiki/Comparison_of_layout_engines_(HTML5_media)" title="Comparison of layout engines (HTML5 media)">media</a></li>
+<li><a href="/wiki/Comparison_of_layout_engines_(HTML5_canvas)" title="Comparison of layout engines (HTML5 canvas)">canvas</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Comparison_of_layout_engines_(XML)" title="Comparison of layout engines (XML)">XML</a>
+<ul>
+<li><a href="/wiki/Comparison_of_layout_engines_(XHTML)" title="Comparison of layout engines (XHTML)">XHTML</a>
+<ul>
+<li><a href="/wiki/Comparison_of_layout_engines_(XHTML_1.1)" title="Comparison of layout engines (XHTML 1.1)">1.1</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Comparison_of_layout_engines_(MathML)" title="Comparison of layout engines (MathML)">MathML</a></li>
+<li><a href="/wiki/Comparison_of_layout_engines_(Scalable_Vector_Graphics)" title="Comparison of layout engines (Scalable Vector Graphics)">SVG</a></li>
+</ul>
+</li>
+<li><a href="/wiki/Comparison_of_layout_engines_(Cascading_Style_Sheets)" title="Comparison of layout engines (Cascading Style Sheets)">CSS</a></li>
+<li><a href="/wiki/Comparison_of_layout_engines_(ECMAScript)" title="Comparison of layout engines (ECMAScript)">ECMAScript</a></li>
+<li><a href="/wiki/Comparison_of_layout_engines_(Document_Object_Model)" title="Comparison of layout engines (Document Object Model)">DOM</a></li>
+<li><a href="/wiki/Comparison_of_layout_engines_(graphics)" title="Comparison of layout engines (graphics)">Graphics</a></li>
+<li><a href="/wiki/Comparison_of_layout_engines_(web_typography)" title="Comparison of layout engines (web typography)">Typography</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div role="navigation" class="navbox" aria-labelledby="Mozilla" style="padding:3px">
+<table class="nowraplinks hlist collapsible collapsed navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="2">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Mozilla" title="Template:Mozilla"><abbr title="View this template" style=";;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Mozilla" title="Template talk:Mozilla"><abbr title="Discuss this template" style=";;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Mozilla&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">e</abbr></a></li>
+</ul>
+</div>
+<div id="Mozilla" style="font-size:114%;margin:0 4em"><a href="/wiki/Mozilla" title="Mozilla">Mozilla</a></div>
+</th>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";">
+<div id="Projects" style="font-size:114%;margin:0 4em">Projects</div>
+</th>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Mozilla<br />
+Labs</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Bonsai_(software)" title="Bonsai (software)">Bonsai</a></li>
+<li><a href="/wiki/Bugzilla" title="Bugzilla">Bugzilla</a></li>
+<li><a href="/wiki/ChatZilla" title="ChatZilla">ChatZilla</a></li>
+<li><a href="/wiki/Electrolysis_Project" class="mw-redirect" title="Electrolysis Project">Electrolysis Project</a></li>
+<li><a href="/wiki/Jetpack_(Firefox_project)" title="Jetpack (Firefox project)">Jetpack</a></li>
+<li><a href="/wiki/Lightning_(software)" title="Lightning (software)">Lightning</a></li>
+<li><a href="/wiki/Mozilla_Persona" title="Mozilla Persona">Persona</a></li>
+<li><a href="/wiki/Mozilla_Prism" title="Mozilla Prism">Prism</a></li>
+<li><a href="/wiki/Mozilla_Raindrop" title="Mozilla Raindrop">Raindrop</a></li>
+<li><a href="/wiki/Mozilla_Skywriter" title="Mozilla Skywriter">Skywriter</a></li>
+<li><a href="/wiki/Mozilla_Sunbird" title="Mozilla Sunbird">Sunbird</a></li>
+<li><a href="/wiki/PDF.js" title="PDF.js">PDF.js</a></li>
+<li><a href="/wiki/Firefox_Sync" title="Firefox Sync">Sync</a></li>
+<li>Tinderbox</li>
+<li><a href="/wiki/Ubiquity_(Firefox)" title="Ubiquity (Firefox)">Ubiquity</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Mozilla<br />
+Research</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Asm.js" title="Asm.js">asm.js</a></li>
+<li><a href="/wiki/Daala" title="Daala">Daala</a></li>
+<li><a href="/wiki/Firefox_OS" title="Firefox OS">Firefox OS</a></li>
+<li><a href="/wiki/OpenFlint" title="OpenFlint">OpenFlint</a></li>
+<li><a href="/wiki/Alliance_for_Open_Media" title="Alliance for Open Media">Open Media</a></li>
+<li><a href="/wiki/Rust_(programming_language)" title="Rust (programming language)">Rust</a></li>
+<li><a class="mw-selflink selflink">Servo</a></li>
+<li><a href="/wiki/Shumway_(software)" title="Shumway (software)">Shumway</a></li>
+<li><a href="/wiki/WebAssembly" title="WebAssembly">WebAssembly</a></li>
+<li><a href="/wiki/WebVR" title="WebVR">WebVR</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Mozilla<br />
+Foundation</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Firefox" title="Firefox">Firefox</a>
+<ul>
+<li><i><a href="/wiki/Firefox_1" class="mw-redirect" title="Firefox 1">1</a></i></li>
+<li><i><a href="/wiki/Firefox_1.5" class="mw-redirect" title="Firefox 1.5">1.5</a></i></li>
+<li><i><a href="/wiki/Firefox_2" title="Firefox 2">2</a></i></li>
+<li><i><a href="/wiki/Firefox_3" class="mw-redirect" title="Firefox 3">3</a></i></li>
+<li><i><a href="/wiki/Firefox_3.5" title="Firefox 3.5">3.5</a></i></li>
+<li><a href="/wiki/Firefox_3.6" title="Firefox 3.6">3.6</a></li>
+<li><i><a href="/wiki/Firefox_4" title="Firefox 4">4</a></i></li>
+<li><i><a href="/wiki/History_of_Firefox#Rapid_release" title="History of Firefox">5–current</a></i></li>
+<li><a href="/wiki/History_of_Firefox#Future_releases" title="History of Firefox">Future releases</a></li>
+<li><a href="/wiki/Firefox_for_mobile" class="mw-redirect" title="Firefox for mobile">for Mobile</a></li>
+<li><a href="/wiki/Firefox_for_iOS" title="Firefox for iOS">for iOS</a></li>
+</ul>
+</li>
+<li><a href="/wiki/SeaMonkey" title="SeaMonkey">SeaMonkey</a></li>
+<li><a href="/wiki/Mozilla_Thunderbird" title="Mozilla Thunderbird">Thunderbird</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Origins</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mozilla_Application_Suite" title="Mozilla Application Suite">Mozilla Application Suite</a></li>
+<li><a href="/wiki/Netscape_Navigator" title="Netscape Navigator">Netscape Navigator</a></li>
+<li><a href="/wiki/Netscape_Communicator" title="Netscape Communicator">Netscape Communicator</a></li>
+<li><a href="/wiki/Netscape" title="Netscape">Netscape Communications</a></li>
+<li><a href="/wiki/Beonex_Communicator" title="Beonex Communicator">Beonex Communicator</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Forks<br />
+(discontinued in <i>italics</i>)</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/GNewSense#Comparison_with_other_distributions" title="GNewSense">BurningDog</a></li>
+<li><a href="/wiki/Classilla" title="Classilla">Classilla</a></li>
+<li><i><a href="/wiki/Flock_(web_browser)" title="Flock (web browser)">Flock</a></i></li>
+<li><a href="/wiki/Gnuzilla" title="Gnuzilla">Gnuzilla</a></li>
+<li><a href="/wiki/Mozilla_software_rebranded_by_Debian#Iceape" title="Mozilla software rebranded by Debian">Iceape</a></li>
+<li><a href="/wiki/GNU_IceCat" title="GNU IceCat">IceCat</a></li>
+<li><a href="/wiki/Mozilla_software_rebranded_by_Debian#Icedove" title="Mozilla software rebranded by Debian">Icedove</a></li>
+<li><a href="/wiki/Mozilla_software_rebranded_by_Debian#Iceowl" title="Mozilla software rebranded by Debian">Iceowl</a></li>
+<li><a href="/wiki/Miro_(software)" title="Miro (software)">Miro</a></li>
+<li><i><a href="/wiki/Netscape_Navigator_9" title="Netscape Navigator 9">Netscape 9</a></i></li>
+<li><a href="/wiki/Pale_Moon_(web_browser)" title="Pale Moon (web browser)">Pale Moon</a></li>
+<li><a href="/wiki/Firefox_Portable" title="Firefox Portable">Portable Edition</a></li>
+<li><i><a href="/wiki/Swiftfox" title="Swiftfox">Swiftfox</a></i></li>
+<li><i><a href="/wiki/Swiftweasel" title="Swiftweasel">Swiftweasel</a></i></li>
+<li><a href="/wiki/TenFourFox" title="TenFourFox">TenFourFox</a></li>
+<li><i><a href="/wiki/XB_Browser" title="XB Browser">xB Browser</a></i></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Frameworks</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Add-on_(Mozilla)" title="Add-on (Mozilla)">Add-on</a></li>
+<li><a href="/wiki/Gecko_(software)" title="Gecko (software)">Gecko</a></li>
+<li><a href="/wiki/Mozilla_application_framework" title="Mozilla application framework">Necko</a></li>
+<li><a href="/wiki/NPAPI" title="NPAPI">NPAPI</a>
+<ul>
+<li><a href="/wiki/NPAPI#XPConnect" title="NPAPI">XPConnect</a></li>
+</ul>
+</li>
+<li><a href="/wiki/XBL" title="XBL">XBL</a></li>
+<li><a href="/wiki/XPCOM" title="XPCOM">XPCOM</a></li>
+<li><a href="/wiki/XPInstall" title="XPInstall">XPInstall</a></li>
+<li><a href="/wiki/XUL" title="XUL">XUL</a></li>
+<li><a href="/wiki/XULRunner" title="XULRunner">XULRunner</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Components</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/w/index.php?title=Application_Object_Model&amp;action=edit&amp;redlink=1" class="new" title="Application Object Model (page does not exist)">Application Object Model</a></li>
+<li><a href="/wiki/Mozilla_Composer" title="Mozilla Composer">Composer</a></li>
+<li><a href="/wiki/Netscape_Portable_Runtime" title="Netscape Portable Runtime">NSPR</a></li>
+<li><a href="/wiki/Network_Security_Services" title="Network Security Services">NSS</a></li>
+<li><a href="/wiki/Rhino_(JavaScript_engine)" title="Rhino (JavaScript engine)">Rhino</a></li>
+<li><a href="/wiki/SpiderMonkey" title="SpiderMonkey">SpiderMonkey</a></li>
+<li><a href="/wiki/Tamarin_(software)" title="Tamarin (software)">Tamarin</a></li>
+<li><a href="/wiki/Venkman" title="Venkman">Venkman</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Discontinued</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mozilla_Calendar_Project" title="Mozilla Calendar Project">Calendar Project</a></li>
+<li><a href="/wiki/Camino_(web_browser)" title="Camino (web browser)">Camino</a></li>
+<li><a href="/wiki/Firefox_Home" class="mw-redirect" title="Firefox Home">Firefox Home</a></li>
+<li><a href="/wiki/Mozilla_Grendel" title="Mozilla Grendel">Grendel</a></li>
+<li><a href="/wiki/Minimo" title="Minimo">Minimo</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";">
+<div id="Organization" style="font-size:114%;margin:0 4em">Organization</div>
+</th>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="row" class="navbox-group" style="width:1%"><a href="/wiki/Mozilla" title="Mozilla">Foundation</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><i>Former <a href="/wiki/Mozilla_Organization" class="mw-redirect" title="Mozilla Organization">Mozilla Organization</a></i></li>
+<li><a href="/wiki/Mozilla_Foundation" title="Mozilla Foundation">Mozilla Foundation</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Subsidiaries</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mozilla_Corporation" title="Mozilla Corporation">Mozilla Corporation</a></li>
+<li><a href="/wiki/Mozilla_Messaging" title="Mozilla Messaging">Mozilla Messaging</a></li>
+<li><a href="/wiki/Mozilla_Foundation#Mozilla_Online" title="Mozilla Foundation">Mozilla Online</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">Official affiliates</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mozilla_China" title="Mozilla China">Mozilla China</a></li>
+<li><a href="/wiki/Mozilla_Europe" title="Mozilla Europe">Mozilla Europe</a></li>
+<li><a href="/wiki/Mozilla_Japan" title="Mozilla Japan">Mozilla Japan</a></li>
+<li><a href="/wiki/Mozilla_Taiwan" title="Mozilla Taiwan">Mozilla Taiwan</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="width:1%">People</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mitchell_Baker" title="Mitchell Baker">Mitchell Baker</a></li>
+<li><a href="/w/index.php?title=David_Baron_(Computer_Scientist)&amp;action=edit&amp;redlink=1" class="new" title="David Baron (Computer Scientist) (page does not exist)">David Baron</a></li>
+<li><a href="/wiki/Sheeri_Cabral" title="Sheeri Cabral">Sheeri Cabral</a></li>
+<li><a href="/wiki/Tantek_%C3%87elik" title="Tantek Çelik">Tantek Çelik</a></li>
+<li><a href="/wiki/Asa_Dotzler" title="Asa Dotzler">Asa Dotzler</a></li>
+<li><a href="/wiki/Brendan_Eich" title="Brendan Eich">Brendan Eich</a></li>
+<li><a href="/wiki/John_Hammink" title="John Hammink">John Hammink</a></li>
+<li><a href="/w/index.php?title=Robert_O%27Callahan&amp;action=edit&amp;redlink=1" class="new" title="Robert O'Callahan (page does not exist)">Robert O'Callahan</a></li>
+<li><a href="/wiki/Johnny_Stenb%C3%A4ck" title="Johnny Stenbäck">Johnny Stenbäck</a></li>
+<li><a href="/wiki/Doug_Turner_(Mozilla)" title="Doug Turner (Mozilla)">Doug Turner</a></li>
+<li><a href="/w/index.php?title=Boris_Zbarsky&amp;action=edit&amp;redlink=1" class="new" title="Boris Zbarsky (page does not exist)">Boris Zbarsky</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";">
+<div id="Community" style="font-size:114%;margin:0 4em">Community</div>
+</th>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Mozdev.org" title="Mozdev.org">mozdev.org</a></li>
+<li><a href="/wiki/Mozilla_Add-ons" class="mw-redirect" title="Mozilla Add-ons">Mozilla Add-ons</a></li>
+<li><a href="/wiki/Mozilla_Developer_Network" title="Mozilla Developer Network">Mozilla Developer Network</a></li>
+<li><a href="/wiki/MozillaZine" title="MozillaZine">MozillaZine</a></li>
+<li><a href="/wiki/Firefox#Promotion" title="Firefox">Spread Firefox</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em"></div>
+<table class="nowraplinks collapsible collapsed navbox-subgroup" style="border-spacing:0">
+<tr>
+<th scope="col" class="navbox-title" colspan="2" style=";">
+<div id="Other_topics" style="font-size:114%;margin:0 4em">Other topics</div>
+</th>
+</tr>
+<tr>
+<td colspan="2" class="navbox-list navbox-odd" style="width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><i><a href="/wiki/The_Book_of_Mozilla" title="The Book of Mozilla">The Book of Mozilla</a></i></li>
+<li><i><a href="/wiki/Code_Rush" title="Code Rush">Code Rush</a></i></li>
+<li><a href="/wiki/Mozilla_Public_License" title="Mozilla Public License">Mozilla Public License</a></li>
+<li><a href="/wiki/Mozilla_localizations" title="Mozilla localizations">Localizations</a></li>
+<li><a href="/wiki/Mozilla_(mascot)" title="Mozilla (mascot)">Mascot</a></li>
+<li><a href="/wiki/Mozilla_software_rebranded_by_Debian" title="Mozilla software rebranded by Debian">Rebranding / forking</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<div role="navigation" class="navbox" aria-labelledby="Samsung_Electronics" style="padding:3px">
+<table class="nowraplinks hlist collapsible collapsed navbox-inner" style="border-spacing:0;background:transparent;color:inherit">
+<tr>
+<th scope="col" class="navbox-title" colspan="3" style="background:#000080;color:white;">
+<div class="plainlinks hlist navbar mini">
+<ul>
+<li class="nv-view"><a href="/wiki/Template:Samsung_Electronics" title="Template:Samsung Electronics"><abbr title="View this template" style="background:#000080;color:white;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">v</abbr></a></li>
+<li class="nv-talk"><a href="/wiki/Template_talk:Samsung_Electronics" title="Template talk:Samsung Electronics"><abbr title="Discuss this template" style="background:#000080;color:white;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">t</abbr></a></li>
+<li class="nv-edit"><a class="external text" href="//en.wikipedia.org/w/index.php?title=Template:Samsung_Electronics&amp;action=edit"><abbr title="Edit this template" style="background:#000080;color:white;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;">e</abbr></a></li>
+</ul>
+</div>
+<div id="Samsung_Electronics" style="font-size:114%;margin:0 4em"><a href="/wiki/Samsung_Electronics" title="Samsung Electronics"><span style="color:white">Samsung Electronics</span></a></div>
+</th>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="3" style="background:#000080;color:white;">
+<div><a href="/wiki/Samsung" title="Samsung">Samsung</a></div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#000080;color:white;;width:1%;text-align: left;">Subsidiaries</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/w/index.php?title=Samsung_Electronics_Sales&amp;action=edit&amp;redlink=1" class="new" title="Samsung Electronics Sales (page does not exist)">Sales</a></li>
+<li><a href="/w/index.php?title=Samsung_Electronics_Service&amp;action=edit&amp;redlink=1" class="new" title="Samsung Electronics Service (page does not exist)">Service</a></li>
+<li><a href="/w/index.php?title=Samsung_Electronics_Logitech&amp;action=edit&amp;redlink=1" class="new" title="Samsung Electronics Logitech (page does not exist)">Logitech</a></li>
+<li><a href="/wiki/Samsung_Medison" title="Samsung Medison">Samsung Medison</a></li>
+<li><a href="/wiki/Samsung_Telecommunications" title="Samsung Telecommunications">Samsung Telecommunications</a></li>
+<li><a href="/w/index.php?title=SEMES&amp;action=edit&amp;redlink=1" class="new" title="SEMES (page does not exist)">SEMES</a></li>
+<li><a href="/wiki/S-LCD" title="S-LCD">S-LCD</a></li>
+<li><a href="/wiki/Harman_International_Industries" title="Harman International Industries">Harman International Industries</a></li>
+</ul>
+</div>
+</td>
+<td class="navbox-image" rowspan="7" style="width:1px;padding:0px 0px 0px 2px">
+<div><a href="/wiki/File:Samsung_wordmark.svg" class="image"><img alt="Samsung wordmark.svg" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Samsung_wordmark.svg/100px-Samsung_wordmark.svg.png" width="100" height="16" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Samsung_wordmark.svg/150px-Samsung_wordmark.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Samsung_wordmark.svg/200px-Samsung_wordmark.svg.png 2x" data-file-width="300" data-file-height="48" /></a></div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#000080;color:white;;width:1%;text-align: left;">R&amp;D Centers</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<dl>
+<dt>Central South America</dt>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Brazil&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Brazil (page does not exist)">SRBR</a></dd>
+<dt>China</dt>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_China,_Beijing&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute China, Beijing (page does not exist)">SRC-B</a></dd>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_China,_Nanjing&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute China, Nanjing (page does not exist)">SRC-N</a></dd>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_China,_Guangzhou&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute China, Guangzhou (page does not exist)">SRC-G</a></dd>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_China,_Tianjin&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute China, Tianjin (page does not exist)">SRC-T</a></dd>
+<dd><a href="/w/index.php?title=Samsung_Research_China&amp;action=edit&amp;redlink=1" class="new" title="Samsung Research China (page does not exist)">SRCS</a></dd>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_China-Xian&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute China-Xian (page does not exist)">SRCX</a></dd>
+<dt><a href="/wiki/Commonwealth_of_Independent_States" title="Commonwealth of Independent States">CIS</a></dt>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Ukraine&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Ukraine (page does not exist)">SRK</a></dd>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Russia&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Russia (page does not exist)">SRR</a></dd>
+<dt>Europe</dt>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_U.K.&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute U.K. (page does not exist)">SRUK</a></dd>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Poland&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Poland (page does not exist)">SRPOL</a></dd>
+<dt>Japan</dt>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Japan,_Osaka&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Japan, Osaka (page does not exist)">SRJ-O</a></dd>
+<dt>Middle East</dt>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Israel&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Israel (page does not exist)">SRIL</a></dd>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Jordan&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Jordan (page does not exist)">SRJO</a></dd>
+<dt>North America</dt>
+<dd><a href="/w/index.php?title=Samsung_Research_America,_Silicon_Valley&amp;action=edit&amp;redlink=1" class="new" title="Samsung Research America, Silicon Valley (page does not exist)">SRA-Silicon Valley</a></dd>
+<dd><a href="/w/index.php?title=San_Jose_Lab&amp;action=edit&amp;redlink=1" class="new" title="San Jose Lab (page does not exist)">San Jose Lab</a></dd>
+<dd><a href="/wiki/Samsung_Research_America" class="mw-redirect" title="Samsung Research America">SRCA</a></dd>
+<dd><a href="/w/index.php?title=Samsung_Research_America,_Dallas&amp;action=edit&amp;redlink=1" class="new" title="Samsung Research America, Dallas (page does not exist)">SRA-D</a></dd>
+<dt>South East Asia</dt>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Indonesia&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Indonesia (page does not exist)">SRIN</a></dd>
+<dd><a href="/w/index.php?title=Samsung_R%26D_Institute_Philippines&amp;action=edit&amp;redlink=1" class="new" title="Samsung R&amp;D Institute Philippines (page does not exist)">SRPH</a></dd>
+<dt>South Asia</dt>
+<dd><a href="/wiki/SRBD" class="mw-redirect" title="SRBD">SRBD</a></dd>
+<dd><a href="/wiki/Samsung_R%26D_Institute_India,_Noida" title="Samsung R&amp;D Institute India, Noida">SRI-N</a></dd>
+<dd><a href="/wiki/Samsung_India_Software_Centre" title="Samsung India Software Centre">SRI-D</a></dd>
+<dd><a href="/wiki/Samsung_R%26D_Institute_India,_Bangalore" title="Samsung R&amp;D Institute India, Bangalore">SRI-B</a></dd>
+</dl>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#000080;color:white;;width:1%;text-align: left;">Joint ventures</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Toshiba_Samsung_Storage_Technology" title="Toshiba Samsung Storage Technology">Toshiba Samsung Storage Technology</a> <small>(49%)</small></li>
+<li><a href="/w/index.php?title=STECO&amp;action=edit&amp;redlink=1" class="new" title="STECO (page does not exist)">STECO</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#000080;color:white;;width:1%;text-align: left;">Products and brands</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li>Active Wash</li>
+<li><a href="/wiki/Samsung_Anycall" title="Samsung Anycall">Anycall</a></li>
+<li><a href="/wiki/Samsung_Ativ" title="Samsung Ativ">Ativ</a></li>
+<li><a href="/wiki/Bixby_(virtual_assistant)" title="Bixby (virtual assistant)">Bixby</a></li>
+<li><a href="/wiki/ChatON" title="ChatON">ChatON</a></li>
+<li>Chef Collection</li>
+<li><a href="/wiki/Exynos" title="Exynos">Exynos</a></li>
+<li><a href="/wiki/Samsung_Galaxy" title="Samsung Galaxy">Galaxy</a></li>
+<li><a href="/wiki/Samsung_Galaxy_Apps" title="Samsung Galaxy Apps">Galaxy Apps</a></li>
+<li><a href="/wiki/Samsung_Gear" title="Samsung Gear">Gear</a></li>
+<li><a href="/wiki/Samsung_Kies" title="Samsung Kies">Kies</a></li>
+<li><a href="/wiki/Samsung_Knox" title="Samsung Knox">Knox</a></li>
+<li>Level</li>
+<li><a href="/wiki/Samsung_Link" title="Samsung Link">Link</a></li>
+<li>Milk</li>
+<li><a href="/wiki/Samsung_NX_series" title="Samsung NX series">NX</a></li>
+<li><a href="/wiki/Samsung_Pay" title="Samsung Pay">Pay</a></li>
+<li><a href="/wiki/S_Voice" title="S Voice">S Voice</a></li>
+<li><a href="/wiki/Samsung_Sens" title="Samsung Sens">Sens</a></li>
+<li>SUHD TV</li>
+<li><a href="/wiki/TouchWiz" title="TouchWiz">TouchWiz</a></li>
+<li><a href="/wiki/Samsung_WatchON" title="Samsung WatchON">WatchON</a></li>
+<li><a href="/wiki/Samsung_YEPP" title="Samsung YEPP">Yepp</a></li>
+<li>Zipel</li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#000080;color:white;;width:1%;text-align: left;"><a href="/wiki/Operating_system" title="Operating system">Operating systems</a></th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Bada" title="Bada">Bada</a></li>
+<li><a href="/wiki/Tizen" title="Tizen">Tizen</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#000080;color:white;;width:1%;text-align: left;">People</th>
+<td class="navbox-list navbox-even" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><a href="/wiki/Lee_Byung-chul" title="Lee Byung-chul">Lee Byung-chul</a></li>
+<li><a href="/wiki/Lee_Kun-hee" title="Lee Kun-hee">Lee Kun-hee</a></li>
+<li><a href="/wiki/Lee_Jae-yong_(businessman)" title="Lee Jae-yong (businessman)">Lee Jae-yong</a></li>
+<li><a href="/wiki/Eric_B._Kim" title="Eric B. Kim">Eric B. Kim</a></li>
+<li><a href="/wiki/Choi_Gee-sung" title="Choi Gee-sung">Choi Gee-sung</a></li>
+<li><a href="/wiki/Kwon_Oh-hyun" title="Kwon Oh-hyun">Kwon Oh-hyun</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" class="navbox-group" style="background:#000080;color:white;;width:1%;text-align: left;">Other topics</th>
+<td class="navbox-list navbox-odd" style="text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px">
+<div style="padding:0em 0.25em">
+<ul>
+<li><i><a href="/wiki/Apple_Inc._v._Samsung_Electronics_Co." title="Apple Inc. v. Samsung Electronics Co.">Apple Inc. v. Samsung Electronics Co.</a></i></li>
+<li><a href="/wiki/Samsung_Global_Scholarship_Program" title="Samsung Global Scholarship Program">Samsung Global Scholarship Program</a></li>
+<li><a href="/wiki/Suwon_Samsung_Bluewings" title="Suwon Samsung Bluewings">Suwon Samsung Bluewings</a></li>
+<li><a href="/wiki/Seoul_Samsung_Thunders" title="Seoul Samsung Thunders">Seoul Samsung Thunders</a></li>
+<li><a href="/wiki/Samsung_Galaxy_(eSports)" title="Samsung Galaxy (eSports)">Samsung Galaxy (eSports)</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<td class="navbox-abovebelow" colspan="3" style="background:#000080;color:white;">
+<div>
+<ul>
+<li><img alt="Category" src="//upload.wikimedia.org/wikipedia/en/thumb/4/48/Folder_Hexagonal_Icon.svg/16px-Folder_Hexagonal_Icon.svg.png" title="Category" width="16" height="14" srcset="//upload.wikimedia.org/wikipedia/en/thumb/4/48/Folder_Hexagonal_Icon.svg/24px-Folder_Hexagonal_Icon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/4/48/Folder_Hexagonal_Icon.svg/32px-Folder_Hexagonal_Icon.svg.png 2x" data-file-width="36" data-file-height="31" /> <b><a href="/wiki/Category:Samsung_Electronics" title="Category:Samsung Electronics">Category</a></b></li>
+<li><img alt="Commons page" src="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/12px-Commons-logo.svg.png" title="Commons page" width="12" height="16" srcset="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/18px-Commons-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/24px-Commons-logo.svg.png 2x" data-file-width="1024" data-file-height="1376" /> <b><a href="https://commons.wikimedia.org/wiki/Category:Samsung_Electronics" class="extiw" title="commons:Category:Samsung Electronics">Commons</a></b></li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+
+<!-- 
+NewPP limit report
+Parsed by mw1186
+Cached time: 20170717030526
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.364 seconds
+Real time usage: 0.463 seconds
+Preprocessor visited node count: 2648/1000000
+Preprocessor generated node count: 0/1500000
+Post‐expand include size: 140093/2097152 bytes
+Template argument size: 9210/2097152 bytes
+Highest expansion depth: 25/40
+Expensive parser function count: 3/500
+Lua time usage: 0.159/10.000 seconds
+Lua memory usage: 4.94 MB/50 MB
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  377.016      1 -total
+ 34.38%  129.627      2 Template:Infobox
+ 34.16%  128.774      1 Template:Reflist
+ 27.35%  103.103      1 Template:Infobox_software
+ 25.07%   94.514     20 Template:Cite_web
+ 10.88%   41.027      1 Template:Infobox_software/simple
+ 10.27%   38.728      1 Template:Mozilla
+  9.28%   35.001      1 Template:Navbox_with_collapsible_groups
+  8.14%   30.691      5 Template:Navbox
+  7.33%   27.638      1 Template:Expand_section
+-->
+</div>
+<!-- Saved in parser cache with key enwiki:pcache:idhash:37328654-0!canonical and timestamp 20170717030526 and revision id 788642000
+ -->
+<noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript></div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Servo_(layout_engine)&amp;oldid=788642000">https://en.wikipedia.org/w/index.php?title=Servo_(layout_engine)&amp;oldid=788642000</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Layout_engines" title="Category:Layout engines">Layout engines</a></li><li><a href="/wiki/Category:Mozilla" title="Category:Mozilla">Mozilla</a></li><li><a href="/wiki/Category:Rust_(programming_language)" title="Category:Rust (programming language)">Rust (programming language)</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:Articles_to_be_expanded_from_November_2015" title="Category:Articles to be expanded from November 2015">Articles to be expanded from November 2015</a></li><li><a href="/wiki/Category:All_articles_to_be_expanded" title="Category:All articles to be expanded">All articles to be expanded</a></li><li><a href="/wiki/Category:Articles_using_small_message_boxes" title="Category:Articles using small message boxes">Articles using small message boxes</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Servo+%28layout+engine%29" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Servo+%28layout+engine%29" title="You're encouraged to log in; however, it's not mandatory. [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/wiki/Servo_(layout_engine)"  title="View the content page [c]" accesskey="c">Article</a></span></li>
+															<li  id="ca-talk"><span><a href="/wiki/Talk:Servo_(layout_engine)"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><div></div>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/wiki/Servo_(layout_engine)" >Read</a></span></li>
+															<li id="ca-edit"><span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=edit"  title="Edit this page [e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><div></div></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search Wikipedia" title="Search Wikipedia [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search Wikipedia for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/wiki/Main_Page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="/wiki/Special:Random" title="Load a random article [x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="//shop.wikimedia.org" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Servo_(layout_engine)" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Servo_(layout_engine)" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="/w/index.php?title=Servo_(layout_engine)&amp;oldid=788642000" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/w/index.php?title=Servo_(layout_engine)&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q7455927" title="Link to connected data repository item [g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Servo_%28layout_engine%29&amp;id=788642000" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-coll-print_export' aria-labelledby='p-coll-print_export-label'>
+			<h3 id='p-coll-print_export-label'>Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Servo+%28layout+engine%29">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="/w/index.php?title=Special:ElectronPdf&amp;page=Servo+%28layout+engine%29&amp;action=show-selection-screen&amp;coll-download-url=%2Fw%2Findex.php%3Ftitle%3DSpecial%3ABook%26bookcmd%3Drender_article%26arttitle%3DServo%2B%2528layout%2Bengine%2529%26returnto%3DServo%2B%2528layout%2Bengine%2529%26oldid%3D788642000%26writer%3Drdf2latex">Download as PDF</a></li><li id="t-print"><a href="/w/index.php?title=Servo_(layout_engine)&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-wikibase-otherprojects' aria-labelledby='p-wikibase-otherprojects-label'>
+			<h3 id='p-wikibase-otherprojects-label'>In other projects</h3>
+
+			<div class="body">
+									<ul>
+						<li class="wb-otherproject-link wb-otherproject-commons"><a href="https://commons.wikimedia.org/wiki/Category:Servo_(layout_engine)" hreflang="en">Wikimedia Commons</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-cs"><a href="https://cs.wikipedia.org/wiki/Servo_(j%C3%A1dro_prohl%C3%AD%C5%BEe%C4%8De)" title="Servo (jádro prohlížeče) – Czech" lang="cs" hreflang="cs" class="interlanguage-link-target">Čeština</a></li><li class="interlanguage-link interwiki-de"><a href="https://de.wikipedia.org/wiki/Servo_(Software)" title="Servo (Software) – German" lang="de" hreflang="de" class="interlanguage-link-target">Deutsch</a></li><li class="interlanguage-link interwiki-es"><a href="https://es.wikipedia.org/wiki/Servo_(motor_de_renderizado)" title="Servo (motor de renderizado) – Spanish" lang="es" hreflang="es" class="interlanguage-link-target">Español</a></li><li class="interlanguage-link interwiki-fa"><a href="https://fa.wikipedia.org/wiki/%D8%B3%D8%B1%D9%88%D9%88_(%D9%85%D9%88%D8%AA%D9%88%D8%B1_%DA%86%DB%8C%D8%AF%D9%85%D8%A7%D9%86)" title="سروو (موتور چیدمان) – Persian" lang="fa" hreflang="fa" class="interlanguage-link-target">فارسی</a></li><li class="interlanguage-link interwiki-fr"><a href="https://fr.wikipedia.org/wiki/Servo_(moteur_de_rendu)" title="Servo (moteur de rendu) – French" lang="fr" hreflang="fr" class="interlanguage-link-target">Français</a></li><li class="interlanguage-link interwiki-ko"><a href="https://ko.wikipedia.org/wiki/%EC%84%9C%EB%B3%B4" title="서보 – Korean" lang="ko" hreflang="ko" class="interlanguage-link-target">한국어</a></li><li class="interlanguage-link interwiki-hu"><a href="https://hu.wikipedia.org/wiki/Servo_(b%C3%B6ng%C3%A9sz%C5%91motor)" title="Servo (böngészőmotor) – Hungarian" lang="hu" hreflang="hu" class="interlanguage-link-target">Magyar</a></li><li class="interlanguage-link interwiki-nl"><a href="https://nl.wikipedia.org/wiki/Servo_(layout-engine)" title="Servo (layout-engine) – Dutch" lang="nl" hreflang="nl" class="interlanguage-link-target">Nederlands</a></li><li class="interlanguage-link interwiki-ja"><a href="https://ja.wikipedia.org/wiki/Servo" title="Servo – Japanese" lang="ja" hreflang="ja" class="interlanguage-link-target">日本語</a></li><li class="interlanguage-link interwiki-pt"><a href="https://pt.wikipedia.org/wiki/Servo_(motor_de_renderiza%C3%A7%C3%A3o)" title="Servo (motor de renderização) – Portuguese" lang="pt" hreflang="pt" class="interlanguage-link-target">Português</a></li><li class="interlanguage-link interwiki-ru"><a href="https://ru.wikipedia.org/wiki/Servo_(%D0%B4%D0%B2%D0%B8%D0%B6%D0%BE%D0%BA)" title="Servo (движок) – Russian" lang="ru" hreflang="ru" class="interlanguage-link-target">Русский</a></li><li class="interlanguage-link interwiki-tr"><a href="https://tr.wikipedia.org/wiki/Servo_(yaz%C4%B1l%C4%B1m)" title="Servo (yazılım) – Turkish" lang="tr" hreflang="tr" class="interlanguage-link-target">Türkçe</a></li><li class="interlanguage-link interwiki-uk"><a href="https://uk.wikipedia.org/wiki/Servo" title="Servo – Ukrainian" lang="uk" hreflang="uk" class="interlanguage-link-target">Українська</a></li><li class="interlanguage-link interwiki-zh"><a href="https://zh.wikipedia.org/wiki/Servo" title="Servo – Chinese" lang="zh" hreflang="zh" class="interlanguage-link-target">中文</a></li>					</ul>
+				<div class="after-portlet after-portlet-lang"><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q7455927#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last edited on 2 July 2017, at 16:33.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="https://wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="https://wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Servo_(layout_engine)&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="/static/images/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"/></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="//www.mediawiki.org/"><img src="/static/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" width="88" height="31"/></a>						</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.364","walltime":"0.463","ppvisitednodes":{"value":2648,"limit":1000000},"ppgeneratednodes":{"value":0,"limit":1500000},"postexpandincludesize":{"value":140093,"limit":2097152},"templateargumentsize":{"value":9210,"limit":2097152},"expansiondepth":{"value":25,"limit":40},"expensivefunctioncount":{"value":3,"limit":500},"entityaccesscount":{"value":1,"limit":400},"timingprofile":["100.00%  377.016      1 -total"," 34.38%  129.627      2 Template:Infobox"," 34.16%  128.774      1 Template:Reflist"," 27.35%  103.103      1 Template:Infobox_software"," 25.07%   94.514     20 Template:Cite_web"," 10.88%   41.027      1 Template:Infobox_software/simple"," 10.27%   38.728      1 Template:Mozilla","  9.28%   35.001      1 Template:Navbox_with_collapsible_groups","  8.14%   30.691      5 Template:Navbox","  7.33%   27.638      1 Template:Expand_section"]},"scribunto":{"limitreport-timeusage":{"value":"0.159","limit":"10.000"},"limitreport-memusage":{"value":5177784,"limit":52428800}},"cachereport":{"origin":"mw1186","timestamp":"20170717030526","ttl":2592000,"transientcontent":false}}});});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":86,"wgHostname":"mw1261"});});</script>
+	</body>
+</html>

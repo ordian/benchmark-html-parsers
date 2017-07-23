@@ -9,7 +9,7 @@ LDFLAGS ?=
 LDFLAGS += -lmyhtml -pthread
 
 CFLAGS ?= -Wall -Werror
-CFLAGS += $(OPTIMIZATION_LEVEL) -fPIC --std=c99 -pthread -I. -I ../html2html_lib/include
+CFLAGS += $(OPTIMIZATION_LEVEL) -fPIC --std=c99 -pthread -I. -I ../html5ever_parse_capi/include
 
 UNAM := $(shell uname -s)
 ifeq ($(UNAM),Linux)
@@ -19,7 +19,7 @@ endif
 
 BENCHMARK_BUILD_WITH_ONLY_MyHTML ?= NO
 ifeq ($(BENCHMARK_BUILD_WITH_ONLY_MyHTML),NO)
-    LDFLAGS +=  -lgumbo -L ../html2html_lib/target/release -lhtml2html_lib -lpthread -l dl
+    LDFLAGS +=  -lgumbo -L ../html5ever_parse_capi/target/release -lhtml5ever_parse_capi -lpthread -l dl
 else
     CFLAGS += -DBENCHMARK_BUILD_WITH_ONLY_MyHTML
 endif
@@ -36,7 +36,7 @@ build: $(OBJS) $(HDRS)
 	$(CC) $(OBJS) $(LDFLAGS) -o $(TARGET)
 
 clean:
-	rm *.o
-	rm $(TARGET)
+	rm -f *.o
+	rm -f $(TARGET)
 
 .PHONY: all clean

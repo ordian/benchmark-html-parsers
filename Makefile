@@ -10,6 +10,6 @@ all:
 
 clean:
 	for f in $(SUBDIRS); do $(MAKE) -C $$f clean; done
-	rm $(PROGNAME)
+	rm -f ./bm
 
 .PHONY:all clean
