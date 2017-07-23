@@ -55,10 +55,10 @@ double proc_stat_getCPUTime(void)
             (double)userSystemTime.wSecond +
             (double)userSystemTime.wMilliseconds / 1000.0;
     }
-    
+
 #elif defined(__unix__) || defined(__unix) || defined(unix) || (defined(__APPLE__) && defined(__MACH__))
     /* AIX, BSD, Cygwin, HP-UX, Linux, OSX, and Solaris --------- */
-    
+
 #if _POSIX_TIMERS > 0
     /* Prefer high-res POSIX timers, when available. */
     {
@@ -82,7 +82,7 @@ double proc_stat_getCPUTime(void)
             (double)ts.tv_nsec / 1000000000.0;
     }
 #endif
-    
+
 #if defined(RUSAGE_SELF)
     {
         struct rusage rusage;
@@ -91,7 +91,7 @@ double proc_stat_getCPUTime(void)
             (double)rusage.ru_utime.tv_usec / 1000000.0;
     }
 #endif
-    
+
 #if defined(_SC_CLK_TCK)
     {
         const double ticks = (double)sysconf( _SC_CLK_TCK );
@@ -100,7 +100,7 @@ double proc_stat_getCPUTime(void)
             return (double)tms.tms_utime / ticks;
     }
 #endif
-    
+
 #if defined(CLOCKS_PER_SEC)
     {
         clock_t cl = clock( );
@@ -108,9 +108,9 @@ double proc_stat_getCPUTime(void)
             return (double)cl / (double)CLOCKS_PER_SEC;
     }
 #endif
-    
+
 #endif
-    
+
     return -1.0;		/* Failed. */
 }
 
@@ -133,7 +133,7 @@ size_t proc_stat_getPeakRSS(void)
     PROCESS_MEMORY_COUNTERS info;
     GetProcessMemoryInfo( GetCurrentProcess( ), &info, sizeof(info) );
     return (size_t)info.PeakWorkingSetSize;
-    
+
 #elif (defined(_AIX) || defined(__TOS__AIX__)) || (defined(__sun__) || defined(__sun) || defined(sun) && (defined(__SVR4) || defined(__svr4__)))
     /* AIX and Solaris ------------------------------------------ */
     struct psinfo psinfo;
@@ -147,7 +147,7 @@ size_t proc_stat_getPeakRSS(void)
     }
     close( fd );
     return (size_t)(psinfo.pr_rssize * 1024L);
-    
+
 #elif defined(__unix__) || defined(__unix) || defined(unix) || (defined(__APPLE__) && defined(__MACH__))
     /* BSD, Linux, and OSX -------------------------------------- */
     struct rusage rusage;
@@ -157,7 +157,7 @@ size_t proc_stat_getPeakRSS(void)
 #else
     return (size_t)(rusage.ru_maxrss * 1024L);
 #endif
-    
+
 #else
     /* Unknown OS ----------------------------------------------- */
     return (size_t)0L;			/* Unsupported. */
@@ -175,7 +175,7 @@ size_t proc_stat_getCurrentRSS(void)
     PROCESS_MEMORY_COUNTERS info;
     GetProcessMemoryInfo( GetCurrentProcess( ), &info, sizeof(info) );
     return (size_t)info.WorkingSetSize;
-    
+
 #elif defined(__APPLE__) && defined(__MACH__)
     /* OSX ------------------------------------------------------ */
     struct mach_task_basic_info info;
@@ -184,7 +184,7 @@ size_t proc_stat_getCurrentRSS(void)
                    (task_info_t)&info, &infoCount ) != KERN_SUCCESS )
         return (size_t)0L;		/* Can't access? */
     return (size_t)info.resident_size;
-    
+
 #elif defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux__)
     /* Linux ---------------------------------------------------- */
     long rss = 0L;
@@ -198,7 +198,7 @@ size_t proc_stat_getCurrentRSS(void)
     }
     fclose( fp );
     return (size_t)rss * (size_t)sysconf( _SC_PAGESIZE);
-    
+
 #else
     /* AIX, BSD, Solaris, and Unknown OS ------------------------ */
     return (size_t)0L;			/* Unsupported. */

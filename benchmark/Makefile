@@ -17,12 +17,8 @@ ifeq ($(UNAM),Linux)
     LDFLAGS += -lrt
 endif
 
-BENCHMARK_BUILD_WITH_ONLY_MyHTML ?= NO
-ifeq ($(BENCHMARK_BUILD_WITH_ONLY_MyHTML),NO)
-    LDFLAGS +=  -lgumbo -L ../html5ever_parse_capi/target/release -lhtml5ever_parse_capi -lpthread -l dl
-else
-    CFLAGS += -DBENCHMARK_BUILD_WITH_ONLY_MyHTML
-endif
+LDFLAGS += -lgumbo
+LDFLAGS += -L ../html5ever_parse_capi/target/release -lhtml5ever_parse_capi -lpthread -l dl
 
 #LDFLAGS += -lhubbub -lparserutils -ldom -lwapcaplet -L/opt/local/lib -liconv
 
