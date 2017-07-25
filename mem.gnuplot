@@ -1,5 +1,6 @@
 set title "html parsers benchmark"
 set ylabel 'rss memory (mb)'
+set yrange [0:]
 
 set datafile separator ";"
 

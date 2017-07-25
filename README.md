@@ -2,7 +2,11 @@
 
 Benchmark for HTML Parsers conformant with the [HTML5 specification]
 
-![Result on html_samples](/images/time.png)
+![time on html_samples](/images/time_html_samples.png)
+
+![time on large_html_4mb](/images/time_large_html_4mb.png)
+
+![memory on large_html_4mb](/images/memory_large_html_4mb.png)
 
 ## Build and Usage
 
